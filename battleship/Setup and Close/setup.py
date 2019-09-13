@@ -4,16 +4,11 @@
 def startup():
     print("Welcome to Battleship!")
 
-def set_number():
 
-
-
-def get_num_of_ships(phase):
-    if phase == "first":
-        num_ships = input("How many ships should each player have: ")
-    if phase != "first":
-        num_ships = phase
-    print(num_ships)
+def get_num_of_ships():
+    num_ships = input("How many ships should each player have: ")
+    while not test_input(num_ships):
+        num_ships = input("Please enter a valid input between 1 and 5: ")
     if test_input(num_ships):
         return int(num_ships)
 
@@ -21,11 +16,9 @@ def get_num_of_ships(phase):
 def test_input(num_ships):
     try:
         if int(num_ships) in range(1, 6):
-            print("valid input found")
-            return num_ships
+            return True
     except ValueError:
-        new_num_ships = input("Please enter a valid input between 1 and 5: ")
-        get_num_of_ships(new_num_ships)
+        return False
 
 
 def choose_ships(ship_num):
@@ -42,5 +35,5 @@ def choose_ships(ship_num):
 
 
 startup()
-numOfShips = get_num_of_ships("first")
+numOfShips = get_num_of_ships()
 choose_ships(numOfShips)
