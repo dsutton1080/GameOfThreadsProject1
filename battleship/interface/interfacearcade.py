@@ -1,6 +1,6 @@
 # New to arcade, based off of a template: http://arcade.academy/examples/starting_template.html#starting-template
 import arcade, random
-
+# pip install arcade
 
 # Grid info
 numofrows = 8
