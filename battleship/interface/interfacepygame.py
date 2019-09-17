@@ -1,6 +1,7 @@
 # New to Pygame, based off of a template: http://programarcadegames.com/python_examples/f.php?file=pygame_base_template.py
-import pygame, os, sys
-
+import pygame
+#import os, sys
+# pip install pygame
 # ---- SETUP ----
 pygame.init()
 # how fast the screen updates
