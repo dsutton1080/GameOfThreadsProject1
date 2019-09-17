@@ -1,5 +1,22 @@
-# import tkinter as tk
 import random
+
+
+class Coordinates:
+    # variables
+    ship_coordinates = None
+
+    def __init__(self):
+        self.ship_coordinates = []
+
+    def add_ship_coordinate(self, new_coordinate):
+        self.ship_coordinates.append(new_coordinate)
+        self.print_all_coordinates()
+
+    def return_all_coordinates(self):
+        return self.ship_coordinates
+
+    def print_all_coordinates(self):
+        print(self.ship_coordinates)
 
 
 def startup():
@@ -38,19 +55,31 @@ def test_input(num_ships):
         return False
 
 
+def add_ship(player, size):
+    if size == 1:
+        new_coordinate = input("Enter a single coordinate where you would like to place your ship: ")
+        player.add_ship_coordinate(new_coordinate)
+    if size in range(2, 6):
+        temp = size
+        while temp > 0:
+            new_coordinate = input("Enter a coordinate where you would like to place your ship: ")
+            player.add_ship_coordinate(new_coordinate)
+            temp = temp - 1
+
+
 def choose_ships(ship_num):
-    if ship_num == 1:
-        print("1x1")
-    if ship_num == 2:
-        print("1x1, 2x1")
-    if ship_num == 3:
-        print("1x1, 2x1, 3x1")
-    if ship_num == 4:
-        print("1x1, 2x1, 3x1, 4x1")
-    if ship_num == 5:
-        print("1x1, 2x1, 3x1, 4x1, 5x1")
+    temp = 1
+    player1 = Coordinates()
+    while temp <= ship_num:
+        print("This is a coordinate for ship " + str(temp))
+        add_ship(player1, temp)
+        temp = temp + 1
 
 
-startup()
-numOfShips = get_num_of_ships()
-choose_ships(numOfShips)
+def main():
+    startup()
+    numOfShips = get_num_of_ships()
+    choose_ships(numOfShips)
+
+
+main()
