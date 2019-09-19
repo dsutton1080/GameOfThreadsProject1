@@ -25,6 +25,11 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 imageBattleshipSurface = pygame.image.load('battleship-1200x900.jpg').convert()
 blackBackground = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+
+# class AbstractDrawComponent(pygame.sprite.Sprite):
+
+
+
 class BoardSquare(pygame.sprite.Sprite):
     def __init__(self,
                  grid_coord,
@@ -88,7 +93,7 @@ class Board:
         fontSize = floor(min(self.squareHeight, self.squareWidth))
 
         def create_label(index):
-            return TextBox("{}".format(chr(index + 64)), (x, y + (index * self.offset) + (self.squareHeight * index)),
+            return TextBox("{}".format(index), (x, y + (index * self.offset) + (self.squareHeight * index)),
                            fontsize=fontSize)
 
         return reduce(lambda others, i: others + [create_label(i)], range(1, 9), [])
@@ -98,7 +103,7 @@ class Board:
         fontSize = floor(min(self.squareHeight, self.squareWidth))
 
         def create_label(index):
-            return TextBox("{}".format(index), (x + (index * self.offset) + (self.squareWidth * index), y), fontsize=fontSize)
+            return TextBox("{}".format(chr(index + 64)), (x + (index * self.offset) + (self.squareWidth * index), y), fontsize=fontSize)
 
         return reduce(lambda others, i: others + [create_label(i)], range(1, 9), [])
 
@@ -135,17 +140,26 @@ class Ship(pygame.sprite.Sprite):
                  length,
                  squareWidth,
                  squareHeight,
-                 window_coord):
+                 window_coord,
+                 orientation=0,
+                 color=colors['BLUE']):
         super(Ship, self).__init__()
         self.length = length
         self.squareWidth = squareWidth
         self.squareHeight = squareHeight
         self.window_coord = window_coord
-        self.grid_coord = (0, 0)
+        self.color = color
+        self.anchor_coord = (0, 0)
         self.offset = SCREEN_HEIGHT / 400
-        self.rect = Rect(self.window_coord[0], self.window_coord[1], self.squareWidth, self.squareHeight * self.length)
-        self.surface = pygame.Surface((self.rect.w, self.rect.h))
-        self.surface.fill(colors['BLUE'])
+        self.surface = pygame.Surface((self.squareWidth, self.squareHeight * self.length))
+        self.rect = self.surface.fill(self.color).move(self.window_coord[0], self.window_coord[1])
+    
+
+def highlight(obj, color):
+    obj.surface.fill(color)
+    obj.rect = obj.surface.get_rect(x=obj.window_coord[0], y=obj.window_coord[1])
+    screen.blit(obj.surface, obj.rect)
+    pygame.display.update(obj)
 
 
 def quit_actions():
@@ -175,7 +189,7 @@ def run_start():
     instructionsTextBox = TextBox("Press the SPACE bar to play", (SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2), fontsize=48)
     screen.blit(instructionsTextBox.surface, instructionsTextBox.rect)
 
-    pygame.display.update()
+    pygame.display.flip()
 
     while True:
         for event in pygame.event.get():
@@ -223,6 +237,16 @@ def run_get_number_ships():
                         return i
 
 
+def get_intersect_object_from_list(pos, ls):
+    for obj in ls:
+        if obj.rect.collidepoint(pos):
+            return obj
+    return None
+
+# def draw_and_update(obj):
+
+
+# Returns a list of lists of (row, col) coordinates. Example: [[(1,1), (1,2), (1,3)], [(3,3), (4,3)], [(8,8)]]
 def run_place_ships(numShips):
 
     # define the board to place on
@@ -257,27 +281,106 @@ def run_place_ships(numShips):
 
 
     # define instructions box
-    instructionsTextBox1 = TextBox("Drag and Drop a ship from the left to a location in the grid on the right.", (48, 48))
-    instructionsTextBox2 = TextBox("Once placed, rotate the ship by using the up and down arrow keys.", (48, 96))
+    instructionsTextBox1 = TextBox("Click a blue ship on the left to select it for placement.", (48, 48))
+    # instructionsTextBox2 = TextBox("Once placed, rotate the ship by using the up and down arrow keys.", (48, 96))
 
+    # draw initial state
     pygame.display.flip()
     screen.blit(blackBackground, blackBackground.get_rect())
     blit_objects(screen, placeBoard.squares + placeBoard.rowLabels + placeBoard.colLabels)
     blit_objects(screen, shipQueue)
     screen.blit(instructionsTextBox1.surface, instructionsTextBox1.rect)
-    screen.blit(instructionsTextBox2.surface, instructionsTextBox2.rect)
+    # screen.blit(instructionsTextBox2.surface, instructionsTextBox2.rect)
+
+    def get_clicked_ship(pos):
+        return get_intersect_object_from_list(pos, shipQueue)
+
+    def get_hovered_square(pos):
+        return get_intersect_object_from_list(pos, placeBoard.squares)
+
+    def run_choose_board_location(ship):
+
+        def wait_for_click(square):
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN and square.rect.collidepoint(event.pos):
+                        return True
+                    elif event.type == pygame.MOUSEMOTION and not square.rect.collidepoint(event.pos):
+                        return False
 
 
-    # define instructions box
-    # draw initial state
+        def run_rotate_ship(shipLength, anchorCoord):
+            instructionsTextBoxRotate = TextBox("Use the UP and DOWN arrow keys to rotate your ship.", (96, 10), fontsize=36)
+            instructionsTextBoxEnter = TextBox("Press ENTER when you are satisfied with the orientation.", (96, 56), fontsize=36)
+            instructionsTextBoxEscape = TextBox("Press the ESC button to cancel placing this ship.", (96, 102), fontsize=36)
+
+            screen.blit(instructionsTextBoxClick.surface, instructionsTextBoxClick.surface.fill(colors['BLACK']).move(instructionsTextBoxClick.window_coord))
+
+            blit_objects(screen, [instructionsTextBoxEnter, instructionsTextBoxRotate, instructionsTextBoxEscape])
+            pygame.display.flip()
+
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+
+
+        instructionsTextBoxClick = TextBox("Click an anchor box on the grid. You will then be able to rotate your ship.", (48, 48))
+        screen.blit(ship.surface, ship.rect)
+        screen.blit(instructionsTextBoxClick.surface, instructionsTextBoxClick.rect)
+        pygame.display.update([ship.rect, instructionsTextBoxClick.rect])
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == MOUSEMOTION:
+                    hoveredSquare = get_hovered_square(event.pos)
+                    if not hoveredSquare == None:
+
+                        ## Change from highlighting only the anchor square to highlighting a valid ship orientation ##
+
+                        highlight(hoveredSquare, colors['GREEN'])
+                        didClick = wait_for_click(hoveredSquare)
+                        if didClick:
+                            shipCoords = run_rotate_ship(ship.length, hoveredSquare.grid_coord)
+                            if not shipCoords == None:
+                                return shipCoords
+                        else:
+                            highlight(hoveredSquare, colors['GREY'])
 
     # event loop
+    shipList = []
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                clickedShip = get_clicked_ship(event.pos)
+                if not clickedShip == None:
+                    # highlight ship
+                    highlight(clickedShip, colors['GREEN'])
+                    # screen.blit(clickedShip.surface, clickedShip.rect)
+                    # pygame.display.update(clickedShip.rect)
+                    chosenLocation = run_choose_board_location(clickedShip)
+                    if chosenLocation == None:
+                        highlight(clickedShip, colors['BLUE'])
+                    else:
+                        shipList += [chosenLocation]
+                        shipQueue.remove(clickedShip)
+                        blit_objects(screen, shipQueue)
+
+        pygame.display.flip()
+        pygame.time.delay(200)
 
 run_start()
 num = run_get_number_ships()
 run_place_ships(num)
 
-pygame.display.update()
 
 while True:
     for event in pygame.event.get():
