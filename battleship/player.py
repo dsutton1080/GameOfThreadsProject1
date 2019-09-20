@@ -1,5 +1,3 @@
-# TODO: Replace "empty", "ship", "Hit", and "Miss" to the necessary values to display a color
-
 import ship as S
 
 
@@ -50,3 +48,4 @@ class Player:
                 print(self.guessGrid[row][col], " ", end='')
             print("")
         print("")
+

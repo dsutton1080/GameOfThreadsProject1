@@ -18,6 +18,14 @@ class Ship:
                 return index
         return -1
 
+    # Returns a list of 2-Tuples representing the coordinates the ship occupies
+    #   Differs from coords in that it omits the boolean values
+    def getPositions(self):
+        positions = []
+        for coord in self.coords:
+            positions.append(coord[0])
+        return positions
+
     # Changes the boolean value associated with a coordinate to True
     #   If this hit would sink the ship, changes isSunk value to True
     #   Returns True on a success and False if the ship does not occupy the given position
