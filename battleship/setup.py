@@ -1,6 +1,7 @@
 import random
 import game as G
 import player as P
+import string
 
 
 class Coordinates:
@@ -22,12 +23,12 @@ class Coordinates:
 
 
 def startup():
-    print("Welcome to Battleship!")
+    print("Welcome message")
     plays_first()
 
 
 def plays_first():
-    coin_choice = input("Lets begin, heads or tails?: ")
+    coin_choice = input("Heads or tails?: ")
     coin_list = ["heads", "tails"]
     correct = random.choice(coin_list)
     if (coin_choice.lower() != "heads") & (coin_choice.lower() != "tails"):
@@ -57,18 +58,6 @@ def test_input(num_ships):
         return False
 
 
-def add_ship(player, size):
-    if size == 1:
-        new_coordinate = input("Enter a single coordinate where you would like to place your ship: ")
-        player.add_ship_coordinate(new_coordinate)
-    if size in range(2, 6):
-        temp = size
-        while temp > 0:
-            new_coordinate = input("Enter a coordinate where you would like to place your ship: ")
-            player.add_ship_coordinate(new_coordinate)
-            temp = temp - 1
-
-
 def choose_ships(ship_num):
     temp = 1
     player1 = Coordinates()
@@ -76,6 +65,33 @@ def choose_ships(ship_num):
         print("This is a coordinate for ship " + str(temp))
         add_ship(player1, temp)
         temp = temp + 1
+
+
+def add_ship(player, size):
+    if size == 1:
+        new_coordinate = input("Enter a single coordinate where you would like to place your ship: ")
+        if verify_ship_input(new_coordinate):
+            player.add_ship_coordinate(new_coordinate)
+        else:
+            print("Invalid Input")
+    if size in range(2, 6):
+        temp = size
+        while temp > 0:
+            new_coordinate = input("Enter a coordinate where you would like to place your ship: ")
+            if verify_ship_input(new_coordinate):
+                player.add_ship_coordinate(new_coordinate)
+            else:
+                print("Invalid Input")
+            temp = temp - 1
+
+
+def verify_ship_input(possible_coordinate):
+    letters = string.ascii_lowercase[:8] + string.ascii_uppercase[:8]
+    if len(possible_coordinate) == 3:
+        if (possible_coordinate[0] in letters) & (int(possible_coordinate[2]) in range(1, 8)):
+            return True
+    else:
+        return False
 
 
 def main():
