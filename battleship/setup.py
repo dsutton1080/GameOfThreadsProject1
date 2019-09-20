@@ -1,25 +1,48 @@
 import random
-import game as G
-import player as P
+import player as p
 import string
 
 
 class Coordinates:
     # variables
-    ship_coordinates = None
+    ship_coordinates = []
+
+    ship_1 = []
+    ship_2 = []
+    ship_3 = []
+    ship_4 = []
+    ship_5 = []
 
     def __init__(self):
         self.ship_coordinates = []
 
-    def add_ship_coordinate(self, new_coordinate):
-        self.ship_coordinates.append(new_coordinate)
-        self.print_all_coordinates()
+    def add_ship_coordinate(self, new_coordinate, ship_size):
+        if ship_size == 1:
+            self.ship_1.append(self.convert_to_tuple(new_coordinate))
+        if ship_size == 2:
+            self.ship_2.append(self.convert_to_tuple(new_coordinate))
+        if ship_size == 3:
+            self.ship_3.append(self.convert_to_tuple(new_coordinate))
+        if ship_size == 4:
+            self.ship_4.append(self.convert_to_tuple(new_coordinate))
+        if ship_size == 5:
+            self.ship_5.append(self.convert_to_tuple(new_coordinate))
+        self.ship_coordinates.append(self.convert_to_tuple(new_coordinate))
+
+    def convert_to_tuple(self, new_coordinate):
+        coordinate = (ord(new_coordinate[0]) - 65, int(new_coordinate[1]) - 1)
+        return coordinate
 
     def return_all_coordinates(self):
         return self.ship_coordinates
 
     def print_all_coordinates(self):
         print(self.ship_coordinates)
+        print(self.ship_1)
+        print(self.ship_2)
+        print(self.ship_3)
+        print(self.ship_4)
+        print(self.ship_5)
 
 
 def startup():
@@ -65,13 +88,14 @@ def choose_ships(ship_num):
         print("This is a coordinate for ship " + str(temp))
         add_ship(player1, temp)
         temp = temp + 1
+    player1.print_all_coordinates()
 
 
 def add_ship(player, size):
     if size == 1:
         new_coordinate = input("Enter a single coordinate where you would like to place your ship: ")
         if verify_ship_input(new_coordinate):
-            player.add_ship_coordinate(new_coordinate)
+            player.add_ship_coordinate(new_coordinate, size)
         else:
             print("Invalid Input")
     if size in range(2, 6):
@@ -79,25 +103,23 @@ def add_ship(player, size):
         while temp > 0:
             new_coordinate = input("Enter a coordinate where you would like to place your ship: ")
             if verify_ship_input(new_coordinate):
-                player.add_ship_coordinate(new_coordinate)
+                player.add_ship_coordinate(new_coordinate, size)
             else:
                 print("Invalid Input")
             temp = temp - 1
 
 
 def verify_ship_input(possible_coordinate):
-    letters = string.ascii_lowercase[:8] + string.ascii_uppercase[:8]
-    if len(possible_coordinate) == 3:
-        if (possible_coordinate[0] in letters) & (int(possible_coordinate[2]) in range(1, 8)):
+    letters = string.ascii_uppercase[:8]
+    if len(possible_coordinate) == 2:
+        if (possible_coordinate[0].upper() in letters) & (int(possible_coordinate[1]) in range(1, 8)):
             return True
     else:
         return False
 
 
 def main():
-    p1 = P.Player()
-    p1.displayGrids()
-    startup()
+    # startup()
     numOfShips = get_num_of_ships()
     choose_ships(numOfShips)
 
