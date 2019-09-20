@@ -9,14 +9,14 @@ class Player:
         self.shipList = []  # List of ships the player currently has
         self.guesses = []   # List of coordinates the player has guessed
         
-        self.shipGrid = [["empty" for i in range(8)] for j in range(8)]
-        self.guessGrid = [["empty" for i in range(8)] for j in range(8)]
+        self.shipGrid = [["~" for i in range(8)] for j in range(8)]
+        self.guessGrid = [["~" for i in range(8)] for j in range(8)]
         
     # Creates a ship from a start and end coordinate and adds it to shipList
     def placeShip(self, start, end):
         newShip = S.createShip(start, end)
         for pos in newShip.getPositions():
-            self.shipGrid[pos[0]][pos[1]] = "ship"
+            self.shipGrid[pos[0]][pos[1]] = "S"
         self.shipList.append(newShip)
         self.numShips += 1
 
@@ -32,9 +32,21 @@ class Player:
         self.guesses.append(position)
         for ship in player.shipList:
             if ship.hit(position):
-                self.guessGrid[position[0]][position[1]] = "Hit"
-                player.shipGrid[position[0]][position[1]] = "Hit"
+                self.guessGrid[position[0]][position[1]] = "H"
+                player.shipGrid[position[0]][position[1]] = "X"
                 return True
-        self.guessGrid[position[0]][position[1]] = "Miss"
+        self.guessGrid[position[0]][position[1]] = "M"
         return False
 
+    def displayGrids(self):
+        print("Your Ships:                     Your Guesses:")
+        print("   A  B  C  D  E  F  G  H           A  B  C  D  E  F  G  H")
+        for idx, row in enumerate(range(0, 8)):
+            print(str(idx + 1), end="  ")
+            for col in range(0, 8):
+                print(self.shipGrid[row][col], " ", end='')
+            print("     ", str(idx + 1), end="  ")
+            for col in range(0, 8):
+                print(self.guessGrid[row][col], " ", end='')
+            print("")
+        print("")
