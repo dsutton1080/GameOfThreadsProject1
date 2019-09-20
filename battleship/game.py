@@ -3,6 +3,7 @@ import player as P
 
 class Game:
     def __init__(self, numShips):
+        self.win = False
         self.numShips = numShips;
         self.player1 = P.Player()
         self.player2 = P.Player()
