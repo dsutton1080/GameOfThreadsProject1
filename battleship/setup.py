@@ -1,4 +1,6 @@
 import random
+import game as G
+import player as P
 
 
 class Coordinates:
@@ -77,6 +79,8 @@ def choose_ships(ship_num):
 
 
 def main():
+    p1 = P.Player()
+    p1.displayGrids()
     startup()
     numOfShips = get_num_of_ships()
     choose_ships(numOfShips)

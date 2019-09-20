@@ -10,16 +10,16 @@ def run_game_procedure():
     play_game(initialState)
 
 def play_loop():
-    while true:
+    while True:
         run_game_procedure()
-        if !(io.prompt_replay()):
-            io.close_display()
-            break
+        # if !(io.prompt_replay()):
+        #     io.close_display()
+        #     break
 
 def play_game(initialState):
     lastState = initialState
     curState = initialState
-    while true:
+    while True:
         io.display_state(data.to_display_dict(curState))
         guess = io.prompt_guess(curState.player.guesses)
         lastState = curState
