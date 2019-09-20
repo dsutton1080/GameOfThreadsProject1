@@ -19,11 +19,6 @@ class Game:
         self.currentPlayer.guess(guess)
         self.nextPlayer()
 
-    def shipPlacement(self, start, end):
-        self.currentPlayer.placeShip(start, end)
-        if self.currentPlayer.numShips == self.numShips:
-            self.nextPlayer()
-
 
 
 
