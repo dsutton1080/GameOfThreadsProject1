@@ -3,6 +3,7 @@ import player as P
 
 class Game:
     def __init__(self, numShips):
+        self.win = False
         self.numShips = numShips;
         self.player1 = P.Player()
         self.player2 = P.Player()
@@ -18,11 +19,6 @@ class Game:
         self.currentPlayer.removeSunkShips()
         self.currentPlayer.guess(guess)
         self.nextPlayer()
-
-    def shipPlacement(self, start, end):
-        self.currentPlayer.placeShip(start, end)
-        if self.currentPlayer.numShips == self.numShips:
-            self.nextPlayer()
 
 
 

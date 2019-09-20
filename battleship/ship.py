@@ -50,11 +50,11 @@ def createShip(start, end):
     if start[0] == end[0]:
         size = end[1] - start[1] + 1
         for i in range(start[1], end[1] + 1):
-            coords.append([(start[0], i), False])
+            coords.append([(i, start[0]), False])
     elif start[1] == end[1]:
         size = end[0] - start[0] + 1
         for i in range(start[0], end[0] + 1):
-            coords.append([(i, start[1]), False])
+            coords.append([(start[1], i), False])
     newShip = Ship(size, coords)
     return newShip
 
