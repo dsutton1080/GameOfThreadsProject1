@@ -44,7 +44,8 @@ class Board:
     def __init__(self,
                  window_location,
                  width,
-                 height):
+                 height,
+                 squares=None):
         super(Board, self).__init__()
         self.window_location = window_location
         self.width = width
@@ -54,7 +55,10 @@ class Board:
         self.squareHeight = (self.height / 9) - self.offset
 
         # stores a list of BoardSquare objects
-        self.squares = self.create_board_squares()
+        if squares == None:
+            self.squares = self.create_board_squares()
+        else:
+            self.squares = squares
 
         # stores the TextBox objects for the row labels
         self.rowLabels = self.create_row_labels()
@@ -77,7 +81,6 @@ class Board:
                 offsetX += self.offset
             row += 1
             offsetY += self.offset
-
         return squares
 
     def create_row_labels(self):

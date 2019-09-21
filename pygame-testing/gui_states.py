@@ -133,85 +133,6 @@ def run_place_ships(numShips):
     def get_clicked_ship(pos):
         return get_intersect_object_from_list(pos, shipQueue)
 
-    def get_hovered_square(pos):
-        return get_intersect_object_from_list(pos, placeBoard.squares)
-
-    def run_choose_board_location(ship, otherShipCoords):
-
-        # highlight the updateBoard squares that correspond to each coordinate in the passed in list of coordinates
-        def highlight_suggestion_placement(coordList, color):
-            print("Hello", list(coordList))
-
-            # highlight(placeBoard)
-            # targetSquares = map(lambda c: coord_to_board_square(placeBoard)(c), coordList)
-            # l = []
-            # for coord in coordList:
-            #     for square in placeBoard.squares:
-            #         if coord == square.grid_coord:
-            #             l += coord
-            #             highlight(square, color)
-            # print(l)
-            # for square in targetSquares:
-            #     highlight(square, color)
-            #     pygame.display.update(square.rect)
-
-        def wait_for_click(square):
-            while True:
-                for event in pygame.event.get():
-                    if event.type == pygame.MOUSEBUTTONDOWN and square.rect.collidepoint(event.pos):
-                        return True
-                    elif event.type == pygame.MOUSEMOTION and not square.rect.collidepoint(event.pos):
-                        return False
-
-
-        def run_rotate_ship(shipLength, anchorCoord, firstOrientation):
-            instructionsTextBoxRotate = TextBox("Use the UP and DOWN arrow keys to rotate your ship.", (96, 10), fontsize=36)
-            instructionsTextBoxEnter = TextBox("Press ENTER when you are satisfied with the orientation.", (96, 56), fontsize=36)
-            instructionsTextBoxEscape = TextBox("Press the ESC button to cancel placing this ship.", (96, 102), fontsize=36)
-
-            screen.blit(instructionsTextBoxClick.surface, instructionsTextBoxClick.surface.fill(colors['BLACK']).move(instructionsTextBoxClick.window_coord))
-
-            blit_objects(screen, [instructionsTextBoxEnter, instructionsTextBoxRotate, instructionsTextBoxEscape])
-            pygame.display.flip()
-
-            while True:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-                        sys.exit()
-
-
-        instructionsTextBoxClick = TextBox("Click an anchor box on the grid. You will then be able to rotate your ship.", (48, 48))
-        screen.blit(ship.surface, ship.rect)
-        screen.blit(instructionsTextBoxClick.surface, instructionsTextBoxClick.rect)
-        pygame.display.update([ship.rect, instructionsTextBoxClick.rect])
-
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == MOUSEMOTION:
-                    hoveredSquare = get_hovered_square(event.pos)
-                    if not hoveredSquare == None:
-                        firstOrientation = first_possible_orientation(hoveredSquare.grid_coord, ship.length, otherShipCoords)
-                        if not firstOrientation == None:
-                            print(firstOrientation)
-                            print(hoveredSquare.grid_coord)
-                            print(ship.length)
-                            highlightCoords = orientation_to_coord_list(hoveredSquare.grid_coord, ship.length, firstOrientation)
-                            print(list(highlightCoords))
-                            highlight_suggestion_placement(list(highlightCoords), colors['GREEN'])
-                            didClick = wait_for_click(hoveredSquare)
-                            if didClick:
-                                shipCoords = run_rotate_ship(ship.length, hoveredSquare.grid_coord, firstOrientation)
-                                if not shipCoords == None:
-                                    return shipCoords
-                            else:
-                                highlight_suggestion_placement(orientation_to_coord_list(hoveredSquare.grid_coord, ship.length, firstOrientation), colors['GREY'])
-
-            pygame.time.delay(100)
-
     # event loop
     shipCoordsList = []
 
@@ -227,7 +148,7 @@ def run_place_ships(numShips):
                     highlight(screen, clickedShip, colors['GREEN'])
                     chosenLocation = run_choose_board_location(clickedShip, shipCoordsList)
                     if chosenLocation == None:
-                        highlight(clickedShip, colors['BLUE'])
+                        highlight(screen, clickedShip, colors['BLUE'])
                     else:
                         shipCoordsList += [chosenLocation]
                         shipQueue.remove(clickedShip)
@@ -236,15 +157,79 @@ def run_place_ships(numShips):
         pygame.display.flip()
         pygame.time.delay(200)
 
+
+def run_choose_board_location(ship, otherShipCoords):
+
+    ## display a board with the other placed ships' coordinates filled in
+
+
+    def get_hovered_square(pos):
+        return get_intersect_object_from_list(pos, placeBoard.squares)
+
+    # highlight the updateBoard squares that correspond to each coordinate in the passed in list of coordinates
+    # just display a new board?
+    def display_suggestion_placement(coordList):
+        # define a list of (coord, code) to be used to create a new board
+        pass
+
+
+    def wait_for_click(square):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN and square.rect.collidepoint(event.pos):
+                    return True
+                elif event.type == pygame.MOUSEMOTION and not square.rect.collidepoint(event.pos):
+                    return False
+
+
+    def run_rotate_ship(shipLength, anchorCoord, firstOrientation):
+        instructionsTextBoxRotate = TextBox("Use the UP and DOWN arrow keys to rotate your ship.", (96, 10), fontsize=36)
+        instructionsTextBoxEnter = TextBox("Press ENTER when you are satisfied with the orientation.", (96, 56), fontsize=36)
+        instructionsTextBoxEscape = TextBox("Press the ESC button to cancel placing this ship.", (96, 102), fontsize=36)
+
+        screen.blit(instructionsTextBoxClick.surface, instructionsTextBoxClick.surface.fill(colors['BLACK']).move(instructionsTextBoxClick.window_coord))
+
+        blit_objects(screen, [instructionsTextBoxEnter, instructionsTextBoxRotate, instructionsTextBoxEscape])
+        pygame.display.flip()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+
+    instructionsTextBoxClick = TextBox("Click an anchor box on the grid. You will then be able to rotate your ship.", (48, 48))
+    screen.blit(ship.surface, ship.rect)
+    screen.blit(instructionsTextBoxClick.surface, instructionsTextBoxClick.rect)
+    pygame.display.update([ship.rect, instructionsTextBoxClick.rect])
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == MOUSEMOTION:
+                hoveredSquare = get_hovered_square(event.pos)
+                if not hoveredSquare == None:
+                    firstOrientation = first_possible_orientation(hoveredSquare.grid_coord, ship.length, otherShipCoords)
+                    if not firstOrientation == None:
+                        print(firstOrientation)
+                        print(hoveredSquare.grid_coord)
+                        print(ship.length)
+                        highlightCoords = orientation_to_coord_list(hoveredSquare.grid_coord, ship.length, firstOrientation)
+                        print(list(highlightCoords))
+                        display_suggestion_placement(list(highlightCoords))
+                        didClick = wait_for_click(hoveredSquare)
+                        if didClick:
+                            shipCoords = run_rotate_ship(ship.length, hoveredSquare.grid_coord, firstOrientation)
+                            if not shipCoords == None:
+                                return shipCoords
+                        else:
+                            highlight_suggestion_placement(orientation_to_coord_list(hoveredSquare.grid_coord, ship.length, firstOrientation), colors['GREY'])
+        pygame.time.delay(100)
+
+
 run_start()
 num = run_get_number_ships()
 run_place_ships(num)
-
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-
-    pygame.time.delay(200)

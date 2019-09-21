@@ -3,7 +3,89 @@ import sys
 import pygame
 from gui_classes import BoardSquare, Board, TextBox, Ship
 
+
+colors = {
+    "GREY": (122, 119, 111),
+    "RED": (255, 0, 0),
+    "BLUE": (0, 0, 255),
+    "GREEN": (0, 255, 0),
+    "WHITE": (255, 255, 255),
+    "BLACK": (0, 0, 0)
+}
+
+
+SCREEN_WIDTH = 1200
+SCREEN_HEIGHT = 900
+
 ### GENERAL
+
+
+def generate_color_squares(coordColorPairList, encodingContext, window_location, width, height):
+    offset = SCREEN_HEIGHT / 400
+    squareWidth = (width / 9) - offset
+    squareHeight = (height / 9) - offset
+    x, y = window_location
+
+    def targetCode(curCoord):
+        for coord, code in coordColorPairList:
+            if coord == curCoord:
+                return code
+        return 0
+
+    squares = []
+    offsetY = 0
+    row = 1
+    for rowY in [(y + (squareHeight * i)) for i in range(1, 9)]:
+        offsetX = 0
+        col = 1
+        for colX in [(x + (squareWidth * i)) for i in range(1, 9)]:
+
+            squares = squares + [
+                BoardSquare((row, col), (colX + offsetX, rowY + offsetY), squareWidth, squareHeight, color=code_to_color(encodingContext, targetCode(row, col)))]
+            col += 1
+            offsetX += offset
+        row += 1
+        offsetY += offset
+    return squares
+
+
+# Takes a list of (coord, colorCode) pairs and a location to draw the board and generates a new board with colored squares
+def board_from_coord_color_pairs(coordColorPairList,
+                                 encodingContext,
+                                 window_location,
+                                 width,
+                                 height):
+    return Board(window_location, width, height, squares=generate_color_squares(coordColorPairList, encodingContext, window_location, width, height))
+
+
+# context is either "placement", "guess", or "guessedat"
+# 0 should be the default grey value
+def code_to_color(context, code):
+
+        mapping = {
+           "placement": {
+               0: colors['GREY'],     # Default. Not filled or suggested.
+               1: colors['GREEN'],    # Suggested placement
+               2: colors['BLUE']      # Already filled by another placed ship
+           },
+            "guess": {
+                # code1: colors['GREY']  # Not guessed
+                # code2: colors['RED']   # Missed
+                # code3: colors['GREEN'] # Hit
+            },
+            "guessedat": {
+                # code1: colors['GREY'] # Not guessed
+                # code2: colors['RED']  # Missed
+                # code3: colors['BLUE'] # Our ship, not guessed
+                # code4: colors['ORANGE'] # Our ship, they hit
+            }
+
+        }
+        return mapping[context][code]
+
+
+def blit_board(surface, board):
+    return blit_objects(surface, board.squares + board.rowLabels + board.colLabels)
 
 
 def blit_objects(surface, objlist):
