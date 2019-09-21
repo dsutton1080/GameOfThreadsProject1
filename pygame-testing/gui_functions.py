@@ -20,14 +20,33 @@ SCREEN_HEIGHT = 900
 ### GENERAL
 
 
-def generate_color_squares(coordColorPairList, encodingContext, window_location, width, height):
+def encode_placement_board(suggestionCoords, otherShipCoords):
+    return list(map(lambda c: (c, 1), suggestionCoords)) + list(map(lambda c: (c, 2), otherShipCoords))
+
+
+def generate_placement_board(coordCodePairList):
+    window_location = ((SCREEN_WIDTH / 3), (SCREEN_HEIGHT / 6))
+    width = (SCREEN_WIDTH / 2)
+    height = (SCREEN_HEIGHT * (2 / 3))
+    return board_from_coord_code_pairs(coordCodePairList, "placement", window_location, width, height)
+
+
+def generate_guess_board():
+    pass
+
+
+def generate_guessedat_board():
+    pass
+
+
+def generate_color_squares(coordCodePairList, encodingContext, window_location, width, height):
     offset = SCREEN_HEIGHT / 400
     squareWidth = (width / 9) - offset
     squareHeight = (height / 9) - offset
     x, y = window_location
 
     def targetCode(curCoord):
-        for coord, code in coordColorPairList:
+        for coord, code in coordCodePairList:
             if coord == curCoord:
                 return code
         return 0
@@ -41,7 +60,7 @@ def generate_color_squares(coordColorPairList, encodingContext, window_location,
         for colX in [(x + (squareWidth * i)) for i in range(1, 9)]:
 
             squares = squares + [
-                BoardSquare((row, col), (colX + offsetX, rowY + offsetY), squareWidth, squareHeight, color=code_to_color(encodingContext, targetCode(row, col)))]
+                BoardSquare((row, col), (colX + offsetX, rowY + offsetY), squareWidth, squareHeight, color=code_to_color(encodingContext, targetCode((row, col))))]
             col += 1
             offsetX += offset
         row += 1
@@ -50,12 +69,12 @@ def generate_color_squares(coordColorPairList, encodingContext, window_location,
 
 
 # Takes a list of (coord, colorCode) pairs and a location to draw the board and generates a new board with colored squares
-def board_from_coord_color_pairs(coordColorPairList,
+def board_from_coord_code_pairs(coordCodePairList,
                                  encodingContext,
                                  window_location,
                                  width,
                                  height):
-    return Board(window_location, width, height, squares=generate_color_squares(coordColorPairList, encodingContext, window_location, width, height))
+    return Board(window_location, width, height, squares=generate_color_squares(coordCodePairList, encodingContext, window_location, width, height))
 
 
 # context is either "placement", "guess", or "guessedat"
@@ -121,12 +140,13 @@ def next_orientation(currentOrientation):
 
 
 def orientation_to_ship_end_coord(anchor, shipLength, orientation):
+    orientation = orientation % 4
     row, col = anchor
     mapping = {
-        0: (row + shipLength, col),
-        1: (row, col + shipLength),
-        2: (row - shipLength, col),
-        3: (row, col - shipLength)
+        0: (row + shipLength - 1, col),
+        1: (row, col + shipLength - 1),
+        2: (row - shipLength + 1, col),
+        3: (row, col - shipLength + 1)
     }
     return mapping[orientation]
 
@@ -151,22 +171,20 @@ def is_possible_orientation(anchor, shipLength, orientation, otherFilledCoords):
 
 
 def orientation_to_coord_list(anchor, shipLength, orientation):
-    def abs_range(a, b):
-        if a > b:
-            return range(b, a)
-        else:
-            return range(a, b)
 
     row, col = anchor
     endRow, endCol = orientation_to_ship_end_coord(anchor, shipLength, orientation)
 
-    rowRange = abs_range(row, endRow)
-    colRange = abs_range(col, endCol)
+    l = [anchor]
 
-    if not rowRange:
-        return map(lambda c: (row, c), colRange)
+    if orientation == 0:
+        return l + list(map(lambda i: (i, col), range(row + 1, row + shipLength)))
+    elif orientation == 1:
+        return l + list(map(lambda j: (row, j), range(col + 1, col + shipLength)))
+    elif orientation == 2:
+        return l + list(map(lambda i: (i, col), range(row - shipLength + 1, row)))
     else:
-        return map(lambda r: (r, col), rowRange)
+        return l + list(map(lambda j: (row, j), range(col - shipLength + 1, col)))
 
 
 # returns an orientation code 0-3, otherwise returns None if not possible
