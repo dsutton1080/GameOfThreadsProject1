@@ -46,15 +46,14 @@ class Ship:
 #   The start and end parameters should be 2-tuples given as (row, column)
 def createShip(start, end):
     coords = []
-    size = 0
     if start[0] == end[0]:
         size = end[1] - start[1] + 1
         for i in range(start[1], end[1] + 1):
-            coords.append([(i, start[0]), False])
+            coords.append([(start[0], i), False])
     elif start[1] == end[1]:
         size = end[0] - start[0] + 1
         for i in range(start[0], end[0] + 1):
-            coords.append([(start[1], i), False])
+            coords.append([(i, start[1]), False])
     newShip = Ship(size, coords)
     return newShip
 

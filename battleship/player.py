@@ -31,11 +31,13 @@ class Player:
         for ship in player.shipList:
             if ship.hit(position):
                 print("Hit!")
+                input("Press Enter to end turn.")
                 self.guessGrid[position[0]][position[1]] = "H"
                 player.shipGrid[position[0]][position[1]] = "X"
                 return True
         self.guessGrid[position[0]][position[1]] = "M"
         print("Miss!")
+        input("Press Enter to end turn.")
         return False
 
     def displayGrids(self):

@@ -1,48 +1,44 @@
+'''
+Currently the game is fully implemented; however if a player tries,
+    it will let them have two or more ships occupy the same space.
+
+There may be other issues that I have yet to find
+'''
+
 import random
-import player as p
+import game as G
 import string
+
+
+def convert_to_tuple(string_coord):
+    tuple_coord = (int(string_coord[1]) - 1, ord(string_coord[0]) - 65)
+    return tuple_coord
 
 
 class Coordinates:
     # variables
-    ship_coordinates = []
-
-    ship_1 = []
-    ship_2 = []
-    ship_3 = []
-    ship_4 = []
-    ship_5 = []
 
     def __init__(self):
-        self.ship_coordinates = []
+        self.ship_coordinates = [[], [], [], [], []]
 
     def add_ship_coordinate(self, new_coordinate, ship_size):
+        new_coord_tuple = convert_to_tuple(new_coordinate)
         if ship_size == 1:
-            self.ship_1.append(self.convert_to_tuple(new_coordinate))
+            self.ship_coordinates[0].append(new_coord_tuple)
         if ship_size == 2:
-            self.ship_2.append(self.convert_to_tuple(new_coordinate))
+            self.ship_coordinates[1].append(new_coord_tuple)
         if ship_size == 3:
-            self.ship_3.append(self.convert_to_tuple(new_coordinate))
+            self.ship_coordinates[2].append(new_coord_tuple)
         if ship_size == 4:
-            self.ship_4.append(self.convert_to_tuple(new_coordinate))
+            self.ship_coordinates[3].append(new_coord_tuple)
         if ship_size == 5:
-            self.ship_5.append(self.convert_to_tuple(new_coordinate))
-        self.ship_coordinates.append(self.convert_to_tuple(new_coordinate))
-
-    def convert_to_tuple(self, new_coordinate):
-        coordinate = (ord(new_coordinate[0]) - 65, int(new_coordinate[1]) - 1)
-        return coordinate
+            self.ship_coordinates[4].append(new_coord_tuple)
 
     def return_all_coordinates(self):
         return self.ship_coordinates
 
     def print_all_coordinates(self):
         print(self.ship_coordinates)
-        print(self.ship_1)
-        print(self.ship_2)
-        print(self.ship_3)
-        print(self.ship_4)
-        print(self.ship_5)
 
 
 def startup():
@@ -81,38 +77,61 @@ def test_input(num_ships):
         return False
 
 
-def choose_ships(ship_num):
+def choose_ships(player, ship_num):
     temp = 1
-    player1 = Coordinates()
     while temp <= ship_num:
-        print("This is a coordinate for ship " + str(temp))
-        add_ship(player1, temp)
+        add_ship(player, temp)
         temp = temp + 1
-    player1.print_all_coordinates()
 
 
 def add_ship(player, size):
     if size == 1:
-        new_coordinate = input("Enter a single coordinate where you would like to place your ship: ")
-        if verify_ship_input(new_coordinate):
-            player.add_ship_coordinate(new_coordinate, size)
-        else:
-            print("Invalid Input")
-    if size in range(2, 6):
-        temp = size
-        while temp > 0:
-            new_coordinate = input("Enter a coordinate where you would like to place your ship: ")
+        valid_input = False
+        new_coordinate = input("Enter the coordinate (for example, A1) where you would like to place your 1 ship: ")
+        while not valid_input:
             if verify_ship_input(new_coordinate):
                 player.add_ship_coordinate(new_coordinate, size)
+                valid_input = True
             else:
-                print("Invalid Input")
-            temp = temp - 1
+                new_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
+    if size in range(2, 6):
+        valid_input = False
+        start_coordinate = input(f"Enter the start coordinate for your {size} ship: ")
+        while not valid_input:
+            if verify_ship_input(start_coordinate):
+                player.add_ship_coordinate(start_coordinate, size)
+                valid_input = True
+            else:
+                start_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
+        valid_input = False
+        end_coordinate = input(f"Enter the end coordinate for your {size} ship: ")
+        while not valid_input:
+            if verify_ship_input(end_coordinate):
+                if verify_ship_size(start_coordinate, end_coordinate, size):
+                    player.add_ship_coordinate(end_coordinate, size)
+                    valid_input = True
+                else:
+                    end_coordinate = input("Either end coordinate is not in the same row or col as start, "
+                                           "or ship is the incorrect size. Try again: ")
+            else:
+                end_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
+
+
+def verify_ship_size(start, end, size):
+    start = convert_to_tuple(start)
+    end = convert_to_tuple(end)
+    if (start[0] == end[0]) & (abs(end[1] - start[1]) + 1 == size):
+        return True
+    elif (start[1] == end[1]) & (abs(end[0] - start[0]) + 1 == size):
+        return True
+    else:
+        return False
 
 
 def verify_ship_input(possible_coordinate):
     letters = string.ascii_uppercase[:8]
     if len(possible_coordinate) == 2:
-        if (possible_coordinate[0].upper() in letters) & (int(possible_coordinate[1]) in range(1, 8)):
+        if (possible_coordinate[0].upper() in letters) & (int(possible_coordinate[1]) in range(1, 9)):
             return True
     else:
         return False
@@ -121,7 +140,30 @@ def verify_ship_input(possible_coordinate):
 def main():
     # startup()
     numOfShips = get_num_of_ships()
-    choose_ships(numOfShips)
+    p1_ships = Coordinates()
+    p2_ships = Coordinates()
+    choose_ships(p1_ships, numOfShips)
+    print('')
+    choose_ships(p2_ships, numOfShips)
+    print('\n\n\n\n\n')
+    game = G.Game(numOfShips)
+    game.player1.placeShip(p1_ships.ship_coordinates[0][0], p1_ships.ship_coordinates[0][0])
+    game.player2.placeShip(p2_ships.ship_coordinates[0][0], p2_ships.ship_coordinates[0][0])
+    for i in range(1, numOfShips):
+        game.player1.placeShip(p1_ships.ship_coordinates[i][0], p1_ships.ship_coordinates[i][1])
+        game.player2.placeShip(p2_ships.ship_coordinates[i][0], p2_ships.ship_coordinates[i][1])
+    while not game.win:
+        game.currentPlayer.displayGrids()
+        valid_guess = False
+        current_guess = input("Enter coordinate to fire: ")
+        while not valid_guess:
+            if verify_ship_input(current_guess):
+                valid_guess = True
+                current_guess = convert_to_tuple(current_guess)
+                game.turn(current_guess)
+            else:
+                current_guess = input("Please enter a valid guess: ")
+    game.printWinner()
 
 
 main()
