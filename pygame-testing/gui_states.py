@@ -134,6 +134,8 @@ def run_place_ships(numShips):
     shipCoordsList = []
 
     while True:
+        if not shipQueue:
+            return list(filter(lambda e: not isinstance(e, tuple), shipCoordsList))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -145,14 +147,13 @@ def run_place_ships(numShips):
                     highlight(screen, clickedShip, colors['GREEN'])
                     chosenLocation = run_choose_board_location(clickedShip, shipCoordsList)
                     if chosenLocation == None:
-                        screen.blit(instructionsTextBox1.surface, instructionsTextBox1.rect)
                         highlight(screen, clickedShip, colors['BLUE'])
                     else:
                         shipCoordsList += [chosenLocation]
                         shipQueue.remove(clickedShip)
-                        blit_objects(screen, shipQueue)
-                        screen.blit(instructionsTextBox1)
-
+                        highlight(screen, clickedShip, colors['BLACK'])
+                        # blit_objects(screen, shipQueue)
+        screen.blit(instructionsTextBox1.surface, instructionsTextBox1.rect)
         pygame.display.flip()
         pygame.time.delay(200)
 
@@ -186,21 +187,23 @@ def run_choose_board_location(ship, otherShipCoords):
         blit_board(screen, generate_placement_board(codePairs))
 
 
-    def wait_for_click(square):
+    def wait_for_click_display(board, square):
         while True:
+            blit_board(screen, board)
+            pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN and square.rect.collidepoint(event.pos):
                     return True
                 elif event.type == pygame.MOUSEMOTION and not square.rect.collidepoint(event.pos):
                     return False
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    print("Pressed ESC")
                     return None
+            pygame.time.delay(100)
 
 
     def run_rotate_ship(shipLength, anchorCoord, firstOrientation):
         instructionsTextBoxRotate = TextBox("Use the UP (counter-clockwise) and DOWN (clockwise) arrow keys to rotate your ship.", (96, 10), fontsize=36)
-        instructionsTextBoxEnter = TextBox("Press ENTER when you are satisfied with the orientation.", (96, 56), fontsize=36)
+        instructionsTextBoxEnter = TextBox("Press SPACE when you are satisfied with the orientation.", (96, 56), fontsize=36)
 
         screen.blit(instructionsTextBoxClick.surface, instructionsTextBoxClick.surface.fill(colors['BLACK']).move(instructionsTextBoxClick.window_coord))
 
@@ -227,12 +230,18 @@ def run_choose_board_location(ship, otherShipCoords):
                         orientation = (orientation + 1) % 4
                     elif event.key == pygame.K_DOWN and is_possible_orientation(anchorCoord, shipLength, orientation - 1, otherShipCoords):
                         orientation = (orientation - 1) % 4
+                    elif event.key == pygame.K_SPACE:
+                        cover_instructions(instructionsTextBoxRotate)
+                        cover_instructions(instructionsTextBoxEnter)
+                        cover_instructions(instructionsTextBoxEscape)
+                        cover_instructions(instructionsTextBoxClick)
+                        return placeList
             placeList = orientation_to_coord_list(anchorCoord, shipLength, orientation)
-            display_suggestion_placement_board(placeList)
+            blit_board(screen, generate_placement_board(encode_placement_board(placeList, otherShipCoords)))
             pygame.display.flip()
             pygame.time.delay(100)
 
-
+    blit_board(screen, initialBoard)
     screen.blit(ship.surface, ship.rect)
     screen.blit(instructionsTextBoxClick.surface, instructionsTextBoxClick.rect)
     screen.blit(instructionsTextBoxEscape.surface, instructionsTextBoxEscape.rect)
@@ -244,7 +253,6 @@ def run_choose_board_location(ship, otherShipCoords):
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                print("Pressed ESC")
                 return None
             elif event.type == MOUSEMOTION:
                 hoveredSquare = get_hovered_square(event.pos)
@@ -252,11 +260,13 @@ def run_choose_board_location(ship, otherShipCoords):
                     firstOrientation = first_possible_orientation(hoveredSquare.grid_coord, ship.length, otherShipCoords)
                     if not firstOrientation == None:
                         suggestionCoords = orientation_to_coord_list(hoveredSquare.grid_coord, ship.length, firstOrientation)
-                        display_suggestion_placement_board(suggestionCoords)
-                        pygame.display.flip()
-                        didClick = wait_for_click(hoveredSquare)
+                        displayBoard = generate_placement_board(encode_placement_board(suggestionCoords, otherShipCoords))
+                        didClick = wait_for_click_display(displayBoard, hoveredSquare)
                         if didClick:
-                            return run_rotate_ship(ship.length, hoveredSquare.grid_coord, firstOrientation)
+                            placed = run_rotate_ship(ship.length, hoveredSquare.grid_coord, firstOrientation)
+                            if not placed == None:
+                                otherShipCoords += placed
+                                return placed
                         else:
                             escape_placement()
                             if didClick == None:
@@ -268,4 +278,5 @@ def run_choose_board_location(ship, otherShipCoords):
 
 run_start()
 num = run_get_number_ships()
-run_place_ships(num)
+test = run_place_ships(num)
+print(test)
