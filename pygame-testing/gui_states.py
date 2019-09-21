@@ -1,10 +1,10 @@
+from gui_functions import *
+from gui_classes import BoardSquare, Board, TextBox, Ship
 import sys
 import pygame
 from pygame.locals import *
 from functools import reduce
 from math import floor
-
-
 
 colors = {
     "GREY": (122, 119, 111),
@@ -14,6 +14,7 @@ colors = {
     "WHITE": (255, 255, 255),
     "BLACK": (0, 0, 0)
 }
+
 
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 900
@@ -25,227 +26,6 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 imageBattleshipSurface = pygame.image.load('battleship-1200x900.jpg').convert()
 blackBackground = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-
-# class AbstractDrawComponent(pygame.sprite.Sprite):
-
-
-
-class BoardSquare(pygame.sprite.Sprite):
-    def __init__(self,
-                 grid_coord,
-                 window_coord,
-                 width,
-                 height,
-                 color=colors['GREY']):
-        super(BoardSquare, self).__init__()
-        self.grid_coord = grid_coord
-        self.window_coord = window_coord
-        self.color = color
-        self.rect = Rect(self.window_coord[0], self.window_coord[1], width, height)
-        self.surface = pygame.Surface((width, height))
-        self.surface.fill(self.color)
-
-    def update_color(self, color):
-        self.color = color
-
-
-class Board:
-    def __init__(self,
-                 window_location,
-                 width,
-                 height):
-        super(Board, self).__init__()
-        self.window_location = window_location
-        self.width = width
-        self.height = height
-        self.offset = SCREEN_HEIGHT / 400
-        self.squareWidth = (self.width / 9) - self.offset
-        self.squareHeight = (self.height / 9) - self.offset
-
-        # stores a list of BoardSquare objects
-        self.squares = self.create_board_squares()
-
-        # stores the TextBox objects for the row labels
-        self.rowLabels = self.create_row_labels()
-
-        # stores the TextBox objects for the column labels
-        self.colLabels = self.create_col_labels()
-
-    def create_board_squares(self):
-        x, y = self.window_location
-        squares = []
-        offsetY = 0
-        row = 1
-        for rowY in [(y + (self.squareHeight * i)) for i in range(1, 9)]:
-            offsetX = 0
-            col = 1
-            for colX in [(x + (self.squareWidth * i)) for i in range(1, 9)]:
-                squares = squares + [
-                    BoardSquare((row, col), (colX + offsetX, rowY + offsetY), self.squareWidth, self.squareHeight)]
-                col += 1
-                offsetX += self.offset
-            row += 1
-            offsetY += self.offset
-
-        return squares
-
-    def create_row_labels(self):
-        x, y = self.window_location
-        fontSize = floor(min(self.squareHeight, self.squareWidth))
-
-        def create_label(index):
-            return TextBox("{}".format(index), (x, y + (index * self.offset) + (self.squareHeight * index)),
-                           fontsize=fontSize)
-
-        return reduce(lambda others, i: others + [create_label(i)], range(1, 9), [])
-
-    def create_col_labels(self):
-        x, y = self.window_location
-        fontSize = floor(min(self.squareHeight, self.squareWidth))
-
-        def create_label(index):
-            return TextBox("{}".format(chr(index + 64)), (x + (index * self.offset) + (self.squareWidth * index), y), fontsize=fontSize)
-
-        return reduce(lambda others, i: others + [create_label(i)], range(1, 9), [])
-
-
-def blit_objects(surface, objlist):
-    for obj in objlist:
-        surface.blit(obj.surface, obj.rect)
-
-
-class TextBox(pygame.sprite.Sprite):
-    def __init__(self,
-                 message,
-                 window_coord=(0, 0),
-                 textcolor=colors['WHITE'],
-                 backgroundcolor=colors['BLACK'],
-                 fontsize=48,
-                 font=None):
-        super(TextBox, self).__init__()
-        self.message = message
-        self.window_coord = window_coord
-        self.textcolor = textcolor
-        self.backgroundcolor = backgroundcolor
-        self.fontsize = fontsize
-        self.font = font
-        font = pygame.font.SysFont(self.font, self.fontsize)
-        self.surface = font.render(message, True, self.textcolor, self.backgroundcolor)
-        self.rect = pygame.Rect(self.window_coord[0], self.window_coord[1], self.surface.get_width(), self.surface.get_height())
-        self.width = self.surface.get_width()
-        self.height = self.surface.get_height()
-
-
-class Ship(pygame.sprite.Sprite):
-    def __init__(self,
-                 length,
-                 squareWidth,
-                 squareHeight,
-                 window_coord,
-                 orientation=0,
-                 color=colors['BLUE']):
-        super(Ship, self).__init__()
-        self.length = length
-        self.squareWidth = squareWidth
-        self.squareHeight = squareHeight
-        self.window_coord = window_coord
-        self.color = color
-        self.anchor_coord = (0, 0)
-        self.offset = SCREEN_HEIGHT / 400
-        self.surface = pygame.Surface((self.squareWidth, self.squareHeight * self.length))
-        self.rect = self.surface.fill(self.color).move(self.window_coord[0], self.window_coord[1])
-
-
-def highlight(obj, color):
-    obj.surface.fill(color)
-    obj.rect = obj.surface.get_rect(x=obj.window_coord[0], y=obj.window_coord[1])
-    screen.blit(obj.surface, obj.rect)
-    pygame.display.update(obj)
-
-
-def quit_actions():
-    pygame.quit()
-    sys.exit()
-
-
-def is_quit_case(event):
-    return event == pygame.QUIT
-
-
-def next_orientation(currentOrientation):
-    return (currentOrientation + 1) % 4
-
-
-def orientation_to_ship_end_coord(anchor, shipLength, orientation):
-    row, col = anchor
-    mapping = {
-        0: (row + shipLength, col),
-        1: (row, col + shipLength),
-        2: (row - shipLength, col),
-        3: (row, col - shipLength)
-    }
-    return mapping[orientation]
-
-
-def is_on_board(coord):
-    x, y = coord
-    if (x > 0) and (x < 9) and (y > 0) and (y < 9):
-        return True
-    return False
-
-
-def is_coord_conflict(coordList1, coordList2):
-    for coord in coordList1:
-        if coord in coordList2:
-            return True
-    return False
-
-
-def is_possible_orientation(anchor, shipLength, orientation, otherFilledCoords):
-    return (is_on_board(orientation_to_ship_end_coord(anchor, shipLength, orientation))) and (
-        not is_coord_conflict(orientation_to_coord_list(anchor, shipLength, orientation), otherFilledCoords))
-
-
-def orientation_to_coord_list(anchor, shipLength, orientation):
-    def abs_range(a, b):
-        if a > b:
-            return range(b, a)
-        else:
-            return range(a, b)
-
-    row, col = anchor
-    endRow, endCol = orientation_to_ship_end_coord(anchor, shipLength, orientation)
-
-    rowRange = abs_range(row, endRow)
-    colRange = abs_range(col, endCol)
-
-    if not rowRange:
-        return map(lambda c: (row, c), colRange)
-    else:
-        return map(lambda r: (r, col), rowRange)
-
-
-# returns an orientation code 0-3, otherwise returns None if not possible
-def first_possible_orientation(anchor, shipLength, otherFilledCoords):
-    for i in [0, 1, 2, 3]:
-        if is_possible_orientation(anchor, shipLength, i, otherFilledCoords):
-            return i
-    return None
-
-
-def coord_to_board_square(board):
-    print(board.squares)
-    return lambda coord: (filter(lambda s: s.grid_coord == coord, board.squares))[0]
-
-
-# background = pygame.image.load('battleship.jpg').convert()
-# screen.blit(background, (0, 0))
-#
-# battleshipTextBox = TextBox("Battleship!", (250, 100), fontsize=96)
-# screen.blit(battleshipTextBox.surface, battleshipTextBox.rect)
-#
-# instructionsTextBox = TextBox("Press the SPACE bar to play", (200, 300), fontsize=48)
-# screen.blit(instructionsTextBox.surface, instructionsTextBox.rect)
 
 def run_start():
     screen.blit(imageBattleshipSurface, (0, 0))
@@ -302,17 +82,6 @@ def run_get_number_ships():
                 for i in [1, 2, 3, 4, 5]:
                     if numberBoxes[i - 1].rect.collidepoint(event.pos):
                         return i
-
-
-def get_intersect_object_from_list(pos, ls):
-    for obj in ls:
-        if obj.rect.collidepoint(pos):
-            return obj
-    return None
-
-
-
-# def draw_and_update(obj):
 
 
 # Returns a list of lists of (row, col) coordinates. Example: [[(1,1), (1,2), (1,3)], [(3,3), (4,3)], [(8,8)]]
@@ -373,7 +142,7 @@ def run_place_ships(numShips):
         def highlight_suggestion_placement(coordList, color):
             print("Hello", list(coordList))
 
-            highlight(placeBoard)
+            # highlight(placeBoard)
             # targetSquares = map(lambda c: coord_to_board_square(placeBoard)(c), coordList)
             # l = []
             # for coord in coordList:
@@ -440,6 +209,7 @@ def run_place_ships(numShips):
                                     return shipCoords
                             else:
                                 highlight_suggestion_placement(orientation_to_coord_list(hoveredSquare.grid_coord, ship.length, firstOrientation), colors['GREY'])
+
             pygame.time.delay(100)
 
     # event loop
@@ -453,10 +223,8 @@ def run_place_ships(numShips):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 clickedShip = get_clicked_ship(event.pos)
                 if not clickedShip == None:
-                    # highlight ship
-                    highlight(clickedShip, colors['GREEN'])
-                    # screen.blit(clickedShip.surface, clickedShip.rect)
-                    # pygame.display.update(clickedShip.rect)
+                    # highlight ship in the queue
+                    highlight(screen, clickedShip, colors['GREEN'])
                     chosenLocation = run_choose_board_location(clickedShip, shipCoordsList)
                     if chosenLocation == None:
                         highlight(clickedShip, colors['BLUE'])
