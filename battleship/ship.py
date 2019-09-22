@@ -45,6 +45,10 @@ class Ship:
 # Returns a Ship object given a start coordinate and end coordinate
 #   The start and end parameters should be 2-tuples given as (row, column)
 def createShip(start, end):
+    if (start[0] > end[0]) | (start[1] > end[1]):
+        temp = start
+        start = end
+        end = temp
     coords = []
     if start[0] == end[0]:
         size = end[1] - start[1] + 1
