@@ -5,6 +5,11 @@
 
 class Ship:
     def __init__(self, size, coords):
+        """
+
+        :param size: 
+        :param coords:
+        """
         self.size = size        # Size of the ship
         self.coords = coords    # List of tuples of coordinates and boolean values
         self.isSunk = False     # Indicates whether the ship has been sunk
