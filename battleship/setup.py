@@ -65,6 +65,9 @@ class Coordinates:
         else:
             return False
 
+    def reset_everything(self):
+        self.ship_coordinates = [[], [], [], [], []]
+
 
 def startup():
     """
@@ -209,6 +212,24 @@ def verify_ship_input(possible_coordinate):
         return False
 
 
+def play_again():
+    correct_answers = ["Yes", "Y", "y", "yes", "YES"]
+    wrong_answers = ["No", "N", "n", "no", "NO"]
+    ans = input("Do you want to play again (Yes/No): ")
+    if ans in correct_answers:
+        return True
+    if ans in wrong_answers:
+        return False
+    else:
+        loop = True
+    while loop:
+        new_ans = input("Please enter a valid response (Yes/No): ")
+        if new_ans in correct_answers:
+            return True
+        if new_ans in wrong_answers:
+            return False
+
+
 def main():
     """
 
@@ -219,10 +240,10 @@ def main():
     p2_ships = Coordinates()
     print("Player 1's Turn: ")
     choose_ships(p1_ships, numOfShips)
-    print('')
+    print('\n\n\n\n\n\n\n\n\n\n\n\n')
     print("Player 2's Turn: ")
     choose_ships(p2_ships, numOfShips)
-    print('\n\n\n\n\n\n\n\n')
+    print('\n\n\n\n\n\n\n\n\n\n\n\n')
     game = G.Game(numOfShips)
     game.player1.placeShip(p1_ships.ship_coordinates[0][0], p1_ships.ship_coordinates[0][0])
     game.player2.placeShip(p2_ships.ship_coordinates[0][0], p2_ships.ship_coordinates[0][0])
@@ -241,6 +262,12 @@ def main():
             else:
                 current_guess = input("Please enter a valid guess: ")
     game.printWinner()
-
+    p1_ships.reset_everything()
+    p2_ships.reset_everything()
+    if play_again():
+        print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
+        main()
+    if not play_again():
+        print("Thanks for Playing")
 
 main()
