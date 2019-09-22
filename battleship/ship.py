@@ -7,33 +7,29 @@ class Ship:
     def __init__(self, size, coords):
         """
 
-        :param size:
-        :param coords:
+        :param size: The length of the ship
+        :param coords: List of two-element lists, containing a 2-tuple and a boolean value
         """
         self.size = size        # Size of the ship
         self.coords = coords    # List of tuples of coordinates and boolean values
         self.isSunk = False     # Indicates whether the ship has been sunk
         self.numHits = 0        # Number of time the ship has been hit
 
-    # Returns the index in self.coords of a position if the ship occupies that position
-    #   Otherwise returns -1
     def getCoordIndex(self, position):
         """
 
-        :param position:
-        :return:
+        :param position: A 2-tuple representing a grid position
+        :return: The index in coords in which position appears. Returns -1 if not found
         """
         for index, coord in enumerate(self.coords):
             if position == coord[0]:
                 return index
         return -1
 
-    # Returns a list of 2-Tuples representing the coordinates the ship occupies
-    #   Differs from coords in that it omits the boolean values
     def getPositions(self):
         """
 
-        :return:
+        :return: A list of grid positions; self.coords except without the boolean values
         """
         positions = []
         for coord in self.coords:
@@ -46,8 +42,8 @@ class Ship:
     def hit(self, position):
         """
 
-        :param position:
-        :return:
+        :param position: A 2-tuple representing a grid location
+        :return: True if the the hit is a success, false otherwise
         """
         index = self.getCoordIndex(position)
         success = False
@@ -66,10 +62,14 @@ class Ship:
 def createShip(start, end):
     """
 
-    :param start:
-    :param end:
-    :return:
+    :param start: A 2-tuple given as (row, column)
+    :param end: A 2-tuple given as (row, column)
+    :return: A Ship object whose ends are located at the given parameters
     """
+    if (start[0] > end[0]) | (start[1] > end[1]):
+        temp = start
+        start = end
+        end = temp
     coords = []
     if start[0] == end[0]:
         size = end[1] - start[1] + 1

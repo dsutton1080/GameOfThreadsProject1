@@ -5,7 +5,7 @@ class Game:
     def __init__(self, numShips):
         """
 
-        :param numShips:
+        :param numShips: The number of ships players start with
         """
         self.win = False
         self.numShips = numShips;
@@ -27,7 +27,7 @@ class Game:
     def turn(self, guess):
         """
 
-        :param guess:
+        :param guess: The position a player has guessed
         """
         self.currentPlayer.guess(guess, self.nextPlayer)
         self.advancePlayer()
