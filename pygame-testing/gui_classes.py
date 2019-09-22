@@ -7,6 +7,7 @@ import pygame
 from pygame.locals import *
 from functools import reduce
 from math import floor
+from copy import deepcopy
 
 
 class State:
@@ -28,9 +29,10 @@ class State:
 
 
 class Player:
-    def __init__(self, ships):
+    def __init__(self, ships, name):
         self.ships = ships
         self.guesses = []
+        self.name = name
 
     def add_guess(self, coord):
         self.guesses.append(coord)

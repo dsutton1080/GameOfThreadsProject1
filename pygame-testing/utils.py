@@ -17,10 +17,13 @@ colors = {
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 900
 
+
 def flatten(ls):
     def flatten_element(e):
         if isinstance(e, list):
-            if isinstance(e[0], list):
+            if not e:
+                return []
+            elif isinstance(e[0], list):
                 return flatten(e)
             else:
                 return e

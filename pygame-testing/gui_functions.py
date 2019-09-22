@@ -26,6 +26,7 @@ def which_sunk(guess, guesses, ships):
         return len(targetShip)
     return None
 
+
 def encode_guess_board(guesses, otherShips):
     otherShipCoords = flatten(otherShips)
 
