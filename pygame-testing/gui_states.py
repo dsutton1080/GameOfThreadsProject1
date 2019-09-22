@@ -1,5 +1,5 @@
 from gui_functions import *
-from gui_classes import BoardSquare, Board, TextBox, Ship
+from gui_classes import BoardSquare, Board, TextBox, Shipcd
 import sys
 import pygame
 from pygame.locals import *
