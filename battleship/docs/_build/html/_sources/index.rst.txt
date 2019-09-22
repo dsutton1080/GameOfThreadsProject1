@@ -6,11 +6,14 @@
 Welcome to Battleship's documentation!
 ======================================
 
+.. automodule:: data
+   :members:
+
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
-
 
 Indices and tables
 ==================
