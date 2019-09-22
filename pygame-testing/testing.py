@@ -1,4 +1,5 @@
 
+from utils import colors, SCREEN_WIDTH, SCREEN_HEIGHT
 from gui_functions import *
 from gui_classes import BoardSquare, Board, TextBox, Ship
 import sys
@@ -7,18 +8,6 @@ from pygame.locals import *
 from functools import reduce
 from math import floor
 
-colors = {
-    "GREY": (122, 119, 111),
-    "RED": (255, 0, 0),
-    "BLUE": (0, 0, 255),
-    "GREEN": (0, 255, 0),
-    "WHITE": (255, 255, 255),
-    "BLACK": (0, 0, 0)
-}
-
-
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 900
 
 pygame.init()
 pygame.display.set_caption("Battleship")

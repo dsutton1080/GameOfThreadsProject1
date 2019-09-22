@@ -1,23 +1,58 @@
 
+from utils import flatten, colors, SCREEN_WIDTH, SCREEN_HEIGHT
 import sys
 import pygame
 from gui_classes import BoardSquare, Board, TextBox, Ship
 
 
-colors = {
-    "GREY": (122, 119, 111),
-    "RED": (255, 0, 0),
-    "BLUE": (0, 0, 255),
-    "GREEN": (0, 255, 0),
-    "WHITE": (255, 255, 255),
-    "BLACK": (0, 0, 0)
-}
+def ship_length_to_name(length):
+    mapping = {
+        1: "submarine",
+        2: "destroyer",
+        3: "cruiser",
+        4: "battleship",
+        5: "carrier"
+    }
+    return mapping[length]
 
 
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 900
+def hit(guess, ships):
+    return guess in flatten(ships)
 
-### GENERAL
+
+def which_sunk(guess, guesses, ships):
+    targetShip = flatten(list(filter(lambda s: guess in s, ships)))
+    if all(map(lambda c: c in [guess] + guesses, targetShip)):
+        return len(targetShip)
+    return None
+
+def encode_guess_board(guesses, otherShips):
+    otherShipCoords = flatten(otherShips)
+
+    def map_func(g):
+        if g in otherShipCoords:
+            return (g, 2)
+        else:
+            return (g, 1)
+    return list(map(map_func, guesses))
+
+
+def encode_guessed_at_board(guesses, ships):
+    shipCoords = flatten(ships)
+    allCoords = [(row, col) for row in range(1, 9) for col in range(1, 9)]
+
+    def map_func(c):
+        if c in guesses:
+            if c in shipCoords:
+                return (c, 3)
+            else:
+                return (c, 1)
+        elif c in shipCoords:
+            return (c, 2)
+        else:
+            return (c, 0)
+
+    return list(map(map_func, allCoords))
 
 
 def encode_placement_board(suggestionCoords, otherShipCoords):
@@ -31,12 +66,18 @@ def generate_placement_board(coordCodePairList):
     return board_from_coord_code_pairs(coordCodePairList, "placement", window_location, width, height)
 
 
-def generate_guess_board():
-    pass
+def generate_guess_board(coordCodePairList):
+    width = (7 / 16) * SCREEN_WIDTH
+    height = (1 / 2) * SCREEN_HEIGHT
+    window_location = (30, SCREEN_HEIGHT / 4)
+    return board_from_coord_code_pairs(coordCodePairList, "guess", window_location, width, height)
 
 
-def generate_guessedat_board():
-    pass
+def generate_guessed_at_board(coordCodePairList):
+    width = (7 / 16) * SCREEN_WIDTH
+    height = (1 / 2) * SCREEN_HEIGHT
+    window_location = (SCREEN_WIDTH - 30 - width, SCREEN_HEIGHT / 4)
+    return board_from_coord_code_pairs(coordCodePairList, "guessed_at", window_location, width, height)
 
 
 def generate_color_squares(coordCodePairList, encodingContext, window_location, width, height):
@@ -88,19 +129,27 @@ def code_to_color(context, code):
                2: colors['BLUE']      # Already filled by another placed ship
            },
             "guess": {
-                # code1: colors['GREY']  # Not guessed
-                # code2: colors['RED']   # Missed
-                # code3: colors['GREEN'] # Hit
+                0: colors['GREY'],  # Not guessed
+                1: colors['RED'],   # Missed
+                2: colors['GREEN']  # Hit
             },
-            "guessedat": {
-                # code1: colors['GREY'] # Not guessed
-                # code2: colors['RED']  # Missed
-                # code3: colors['BLUE'] # Our ship, not guessed
-                # code4: colors['ORANGE'] # Our ship, they hit
+            "guessed_at": {
+                0: colors['GREY'],         # Not guessed
+                1: colors['LIGHT-RED'],    # They missed our ship
+                2: colors['BLUE'],         # Our ship, not guessed
+                3: colors['DARK-RED']      # Our ship, they hit
             }
 
         }
         return mapping[context][code]
+
+
+def get_hovered_square(pos, board):
+    return get_intersect_object_from_list(pos, board.squares)
+
+
+def cover_instructions(surface, textbox):
+    surface.blit(textbox.surface, textbox.surface.fill(colors['BLACK']).move(textbox.window_coord))
 
 
 def blit_board(surface, board):

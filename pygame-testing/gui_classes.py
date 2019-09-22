@@ -1,24 +1,39 @@
+# import data.game as G
+# import data.player as P
+# import data.ship as S
 
-from gui_functions import *
-import sys
+from utils import flatten, colors, SCREEN_WIDTH, SCREEN_HEIGHT
 import pygame
 from pygame.locals import *
 from functools import reduce
 from math import floor
 
 
-colors = {
-    "GREY": (122, 119, 111),
-    "RED": (255, 0, 0),
-    "BLUE": (0, 0, 255),
-    "GREEN": (0, 255, 0),
-    "WHITE": (255, 255, 255),
-    "BLACK": (0, 0, 0)
-}
+class State:
+    def __init__(self, player1, player2):
+        self.player1 = player1
+        self.player2 = player2
+        self.iterations = 0
+
+    def update(self, guess):
+        self.player1.add_guess(guess)
+        self.player2, self.player1 = self.player1, self.player2
+        self.iterations += 1
+
+    def is_game_over(self):
+        def gameover(guesses, ships):
+            return all(map(lambda shipcoord: shipcoord in guesses, flatten(ships)))
+
+        return gameover(self.player2.guesses, self.player1.ships)
 
 
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 900
+class Player:
+    def __init__(self, ships):
+        self.ships = ships
+        self.guesses = []
+
+    def add_guess(self, coord):
+        self.guesses.append(coord)
 
 
 class BoardSquare(pygame.sprite.Sprite):

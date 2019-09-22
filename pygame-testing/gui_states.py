@@ -1,23 +1,11 @@
+
+from utils import colors, SCREEN_WIDTH, SCREEN_HEIGHT
 from gui_functions import *
-from gui_classes import BoardSquare, Board, TextBox, Ship
+from gui_classes import State, Player, BoardSquare, Board, TextBox, Ship
 import sys
 import pygame
 from pygame.locals import *
 from functools import reduce
-from math import floor
-
-colors = {
-    "GREY": (122, 119, 111),
-    "RED": (255, 0, 0),
-    "BLUE": (0, 0, 255),
-    "GREEN": (0, 255, 0),
-    "WHITE": (255, 255, 255),
-    "BLACK": (0, 0, 0)
-}
-
-
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 900
 
 
 pygame.init()
@@ -135,6 +123,8 @@ def run_place_ships(numShips):
 
     while True:
         if not shipQueue:
+            screen.fill((0, 0, 0))
+            pygame.display.flip()
             return list(filter(lambda e: not isinstance(e, tuple), shipCoordsList))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -170,15 +160,10 @@ def run_choose_board_location(ship, otherShipCoords):
     initialBoard = generate_placement_board(otherCoordsPairsList)
 
 
-    def get_hovered_square(pos):
-        return get_intersect_object_from_list(pos, initialBoard.squares)
-
     def escape_placement():
         blit_board(screen, initialBoard)
         pygame.display.flip()
 
-    def cover_instructions(textbox):
-        screen.blit(textbox.surface, textbox.surface.fill(colors['BLACK']).move(textbox.window_coord))
 
     # highlight the updateBoard squares that correspond to each coordinate in the passed in list of coordinates
     # just display a new board?
@@ -220,10 +205,10 @@ def run_choose_board_location(ship, otherShipCoords):
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        cover_instructions(instructionsTextBoxRotate)
-                        cover_instructions(instructionsTextBoxEnter)
-                        cover_instructions(instructionsTextBoxEscape)
-                        cover_instructions(instructionsTextBoxClick)
+                        cover_instructions(screen, instructionsTextBoxRotate)
+                        cover_instructions(screen, instructionsTextBoxEnter)
+                        cover_instructions(screen, instructionsTextBoxEscape)
+                        cover_instructions(screen, instructionsTextBoxClick)
                         escape_placement()
                         return None
                     elif event.key == pygame.K_UP and is_possible_orientation(anchorCoord, shipLength, orientation + 1, otherShipCoords):
@@ -231,10 +216,10 @@ def run_choose_board_location(ship, otherShipCoords):
                     elif event.key == pygame.K_DOWN and is_possible_orientation(anchorCoord, shipLength, orientation - 1, otherShipCoords):
                         orientation = (orientation - 1) % 4
                     elif event.key == pygame.K_SPACE:
-                        cover_instructions(instructionsTextBoxRotate)
-                        cover_instructions(instructionsTextBoxEnter)
-                        cover_instructions(instructionsTextBoxEscape)
-                        cover_instructions(instructionsTextBoxClick)
+                        cover_instructions(screen, instructionsTextBoxRotate)
+                        cover_instructions(screen, instructionsTextBoxEnter)
+                        cover_instructions(screen, instructionsTextBoxEscape)
+                        cover_instructions(screen, instructionsTextBoxClick)
                         return placeList
             placeList = orientation_to_coord_list(anchorCoord, shipLength, orientation)
             blit_board(screen, generate_placement_board(encode_placement_board(placeList, otherShipCoords)))
@@ -255,16 +240,16 @@ def run_choose_board_location(ship, otherShipCoords):
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 return None
             elif event.type == MOUSEMOTION:
-                hoveredSquare = get_hovered_square(event.pos)
-                if not hoveredSquare == None:
+                hoveredSquare = get_hovered_square(event.pos, initialBoard)
+                if hoveredSquare is not None:
                     firstOrientation = first_possible_orientation(hoveredSquare.grid_coord, ship.length, otherShipCoords)
-                    if not firstOrientation == None:
+                    if firstOrientation is not None:
                         suggestionCoords = orientation_to_coord_list(hoveredSquare.grid_coord, ship.length, firstOrientation)
                         displayBoard = generate_placement_board(encode_placement_board(suggestionCoords, otherShipCoords))
                         didClick = wait_for_click_display(displayBoard, hoveredSquare)
                         if didClick:
                             placed = run_rotate_ship(ship.length, hoveredSquare.grid_coord, firstOrientation)
-                            if not placed == None:
+                            if placed is not None:
                                 otherShipCoords += placed
                                 return placed
                         else:
@@ -273,10 +258,114 @@ def run_choose_board_location(ship, otherShipCoords):
                                 cover_instructions(instructionsTextBoxEscape)
                                 return None
         pygame.display.flip()
-        pygame.time.delay(100)
+        pygame.time.delay(50)
 
+
+# the main game loop
+# takes 2 args: player1 and player2
+def run_game_wrapper(shipCoords1, shipCoords2):
+
+    guessInstructionsTextBox = TextBox("Click a coordinate on the Attack Board to fire a missile!", (96, 48))
+    switchTurnsInstructionsBox = TextBox("Press the SPACE key to initiate the switch turns countdown", (96, 48))
+    switchTurnsInstructionsBox2 = TextBox("Please switch spots with your playing partner. You have 3 seconds.", (50, SCREEN_HEIGHT / 2), fontsize=48)
+    guessBoardLabel = TextBox("Attack Board", (200, SCREEN_HEIGHT / 5), textcolor=colors['RED'])
+    myBoardLabel = TextBox("My Board", (SCREEN_WIDTH - 300, SCREEN_HEIGHT / 5), textcolor=colors['GREEN'])
+    hitTextBox = TextBox("Hit!", ((SCREEN_WIDTH / 2) - 20, SCREEN_HEIGHT * (8 / 10)), textcolor=colors['GREEN'], fontsize=96)
+    missTextBox = TextBox("Miss.", ((SCREEN_WIDTH / 2) - 20, SCREEN_HEIGHT * (8 / 10)), textcolor=colors['RED'], fontsize=96)
+
+    player1 = Player(shipCoords1)
+    player2 = Player(shipCoords2)
+    state = State(player1, player2)
+
+    def generate_sunk_ship_alert(shipLength):
+        return TextBox("You sunk the other player's {}".format(ship_length_to_name(shipLength)), (SCREEN_WIDTH / 4, SCREEN_HEIGHT * (9 / 10)), textcolor=colors['GREEN'])
+
+    def produce_guess_board():
+        return generate_guess_board(encode_guess_board(state.player1.guesses, state.player2.ships))
+
+    def produce_guessed_at_board():
+        return generate_guessed_at_board(encode_guessed_at_board(state.player2.guesses, state.player1.ships))
+
+    def wait_for_click_guess(square):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN and square.rect.collidepoint(event.pos):
+                    return square.grid_coord
+                elif event.type == pygame.MOUSEMOTION and not square.rect.collidepoint(event.pos):
+                    return None
+            pygame.time.delay(50)
+
+    def run_switch_turns():
+        # display switch turns instruction message
+        screen.blit(switchTurnsInstructionsBox.surface, switchTurnsInstructionsBox.rect)
+        pygame.display.flip()
+        # wait till they hit SPACE
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == KEYDOWN and event.key == pygame.K_SPACE:
+                    # black the screen
+                    screen.fill((0, 0, 0))
+                    # display the instructions to switch turns
+                    screen.blit(switchTurnsInstructionsBox2.surface, switchTurnsInstructionsBox2.rect)
+                    pygame.display.flip()
+                    pygame.time.delay(3000)
+                    screen.fill((0, 0, 0))
+                    return
+            pygame.time.delay(200)
+
+    while True:
+        screen.fill((0, 0, 0))
+        initialGuessBoard = produce_guess_board()
+        blit_board(screen, produce_guess_board())
+        blit_board(screen, produce_guessed_at_board())
+        blit_objects(screen, [guessBoardLabel, myBoardLabel])
+        screen.blit(guessInstructionsTextBox.surface, guessInstructionsTextBox.rect)
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == MOUSEMOTION:
+                hoveredSquare = get_hovered_square(event.pos, initialGuessBoard)
+                if (hoveredSquare is not None) and (hoveredSquare.grid_coord not in player1.guesses):
+                    highlight(screen, hoveredSquare, colors['YELLOW'])
+                    guess = wait_for_click_guess(hoveredSquare)
+                    if guess is not None:
+                        cover_instructions(screen, guessInstructionsTextBox)
+                        if hit(guess, player2.ships):
+                            highlight(screen, hoveredSquare, colors['GREEN'])
+                            screen.blit(hitTextBox.surface, hitTextBox.rect)
+                            sunkenShipLength = which_sunk(guess, player1.guesses, player2.ships)
+                            if sunkenShipLength is not None:
+                                sunkAlertBox = generate_sunk_ship_alert(sunkenShipLength)
+                                screen.blit(sunkAlertBox.surface, sunkAlertBox.rect)
+                                state.update(guess)
+                                if state.is_game_over():
+                                    pygame.display.flip()
+                                    # prompt_replay()
+                                    return
+                        else:
+                            screen.blit(missTextBox.surface, missTextBox.rect)
+                            state.update(guess)
+                        pygame.display.flip()
+                        run_switch_turns()
+                    else:
+                        highlight(screen, hoveredSquare, colors['GREY'])
+        pygame.display.flip()
+        pygame.time.delay(50)
+
+
+
+
+# returns a boolean indicating whether or not to play again
+def prompt_replay():
+    pass
 
 run_start()
 num = run_get_number_ships()
-test = run_place_ships(num)
-print(test)
+test1 = run_place_ships(num)
+test2 = run_place_ships(num)
+run_game_wrapper(test1, test2)
