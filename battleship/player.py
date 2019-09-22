@@ -3,6 +3,9 @@ import ship as S
 
 class Player:
     def __init__(self):
+        """
+
+        """
         self.numShips = 0   # The number of ships the player currently has
         self.shipList = []  # List of ships the player currently has
         self.guesses = []   # List of coordinates the player has guessed
@@ -12,6 +15,11 @@ class Player:
         
     # Creates a ship from a start and end coordinate and adds it to shipList
     def placeShip(self, start, end):
+        """
+
+        :param start:
+        :param end:
+        """
         newShip = S.createShip(start, end)
         for pos in newShip.getPositions():
             self.shipGrid[pos[0]][pos[1]] = "S"
@@ -21,6 +29,9 @@ class Player:
     # Removes ships that are sunk from the players shipList
     #   Should be called for a player at the start of each of their turns
     def removeSunkShips(self):
+        """
+
+        """
         self.shipList = [ship for ship in self.shipList if ship.isSunk is False]
         self.numShips = len(self.shipList)
 
@@ -41,6 +52,9 @@ class Player:
         return False
 
     def displayGrids(self):
+        """
+
+        """
         print("Your Ships:                     Your Guesses:")
         print("   A  B  C  D  E  F  G  H           A  B  C  D  E  F  G  H")
         for idx, row in enumerate(range(0, 8)):
