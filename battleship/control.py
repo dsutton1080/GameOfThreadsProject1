@@ -3,6 +3,9 @@ import data as data
 
 
 def run_game_procedure():
+    """
+
+    """
     numShips = io.prompt_num_ships()
     player1 = data.Player(name=io.prompt_player_name(), ships=io.prompt_fill_ships(), guesses=[])
     player2 = data.Player(name=io.prompt_player_name(), ships=io.prompt_fill_ships(), guesses=[])
@@ -10,6 +13,9 @@ def run_game_procedure():
     play_game(initialState)
 
 def play_loop():
+    """
+
+    """
     while True:
         run_game_procedure()
         # if !(io.prompt_replay()):
@@ -17,6 +23,10 @@ def play_loop():
         #     break
 
 def play_game(initialState):
+    """
+
+    :param initialState:
+    """
     lastState = initialState
     curState = initialState
     while True:
