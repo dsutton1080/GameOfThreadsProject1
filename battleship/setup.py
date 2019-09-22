@@ -138,7 +138,7 @@ def add_ship(player, size):
                 player.add_ship_coordinate(new_coordinate, size)
                 valid_input = True
             else:
-                new_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
+                new_coordinate = input("Invalid coordinate. Try again: ")
     if size in range(2, 6):
         valid_input = False
         start_coordinate = input(f"Enter the START coordinate for your {size} ship: ")
@@ -147,7 +147,7 @@ def add_ship(player, size):
                 player.add_ship_coordinate(start_coordinate, size)
                 valid_input = True
             else:
-                start_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
+                start_coordinate = input("Invalid or duplicate coordinate. Try again: ")
         valid_input = False
         end_coordinate = input(f"Enter the END coordinate for your {size} ship: ")
         while not valid_input:
@@ -159,7 +159,7 @@ def add_ship(player, size):
                     end_coordinate = input("Either END coordinate is not in the same row or col as START, "
                                            "or ship is the incorrect size. Try again: ")
             else:
-                end_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
+                end_coordinate = input("Invalid or duplicate coordinate. Try again: ")
 
 
 def verify_ship_size(start, end, size):
