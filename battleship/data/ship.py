@@ -5,6 +5,11 @@
 
 class Ship:
     def __init__(self, size, coords):
+        """
+
+        :param size:
+        :param coords:
+        """
         self.size = size        # Size of the ship
         self.coords = coords    # List of tuples of coordinates and boolean values
         self.isSunk = False     # Indicates whether the ship has been sunk
@@ -13,6 +18,11 @@ class Ship:
     # Returns the index in self.coords of a position if the ship occupies that position
     #   Otherwise returns -1
     def getCoordIndex(self, position):
+        """
+
+        :param position:
+        :return:
+        """
         for index, coord in enumerate(self.coords):
             if position == coord[0]:
                 return index
@@ -22,6 +32,11 @@ class Ship:
     #   If this hit would sink the ship, changes isSunk value to True
     #   Returns True on a success and False if the ship does not occupy the given position
     def hit(self, position):
+        """
+
+        :param position:
+        :return:
+        """
         index = self.getCoordIndex(position)
         success = False
         if index >= 0:
@@ -37,6 +52,12 @@ class Ship:
 # Returns a Ship object given a start coordinate and end coordinate
 #   The start and end parameters should be 2-tuples given as (row, column)
 def createShip(start, end):
+    """
+
+    :param start:
+    :param end:
+    :return:
+    """
     coords = []
     size = 0
     if start[0] == end[0]:

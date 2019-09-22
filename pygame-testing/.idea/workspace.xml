@@ -2,12 +2,44 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c3e45a1-106c-4b6b-8ef8-4e8d4625d2ca" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui_classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui_classes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui_functions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/doctrees/environment.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/doctrees/index.doctree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/.buildinfo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_sources/index.rst.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/alabaster.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/basic.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/custom.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/doctools.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/documentation_options.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/file.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/jquery-3.4.1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/jquery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/language_data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/minus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/plus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/pygments.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/searchtools.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/underscore-1.3.1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/_static/underscore.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/genindex.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/objects.inv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/py-modindex.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/search.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/_build/html/searchindex.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/conf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/index.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../battleship/docs/make.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/GameOfThreadsProject1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/GameOfThreadsProject1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battleship/Setup and Close/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/../battleship/Setup and Close/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battleship/control.py" beforeDir="false" afterPath="$PROJECT_DIR$/../battleship/control.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battleship/data/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/../battleship/data/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battleship/data/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/../battleship/data/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battleship/data/ship.py" beforeDir="false" afterPath="$PROJECT_DIR$/../battleship/data/ship.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../battleship/io.py" beforeDir="false" afterPath="$PROJECT_DIR$/../battleship/io.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui_states.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui_states.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing.py" beforeDir="false" afterPath="$PROJECT_DIR$/testing.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

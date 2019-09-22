@@ -6,25 +6,45 @@ class Coordinates:
     ship_coordinates = None
 
     def __init__(self):
+        """
+
+        """
         self.ship_coordinates = []
 
     def add_ship_coordinate(self, new_coordinate):
+        """
+
+        :param new_coordinate:
+        """
         self.ship_coordinates.append(new_coordinate)
         self.print_all_coordinates()
 
     def return_all_coordinates(self):
+        """
+
+        :return:
+        """
         return self.ship_coordinates
 
     def print_all_coordinates(self):
+        """
+
+        """
         print(self.ship_coordinates)
 
 
 def startup():
+    """
+
+    """
     print("Welcome to Battleship!")
     plays_first()
 
 
 def plays_first():
+    """
+
+    """
     coin_choice = input("Lets begin, heads or tails?: ")
     coin_list = ["heads", "tails"]
     correct = random.choice(coin_list)
@@ -40,6 +60,10 @@ def plays_first():
 
 
 def get_num_of_ships():
+    """
+
+    :return:
+    """
     num_ships = input("How many ships should each player have: ")
     while not test_input(num_ships):
         num_ships = input("Please enter a valid input between 1 and 5: ")
@@ -48,6 +72,11 @@ def get_num_of_ships():
 
 
 def test_input(num_ships):
+    """
+
+    :param num_ships:
+    :return:
+    """
     try:
         if int(num_ships) in range(1, 6):
             return True
@@ -56,6 +85,11 @@ def test_input(num_ships):
 
 
 def add_ship(player, size):
+    """
+
+    :param player:
+    :param size:
+    """
     if size == 1:
         new_coordinate = input("Enter a single coordinate where you would like to place your ship: ")
         player.add_ship_coordinate(new_coordinate)
@@ -68,6 +102,10 @@ def add_ship(player, size):
 
 
 def choose_ships(ship_num):
+    """
+
+    :param ship_num:
+    """
     temp = 1
     player1 = Coordinates()
     while temp <= ship_num:
@@ -77,6 +115,9 @@ def choose_ships(ship_num):
 
 
 def main():
+    """
+
+    """
     startup()
     numOfShips = get_num_of_ships()
     choose_ships(numOfShips)
