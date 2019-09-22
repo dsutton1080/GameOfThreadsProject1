@@ -15,22 +15,21 @@ class Coordinates:
 
     def __init__(self):
         self.ship_coordinates = [[], [], [], [], []]
+        self.list = []
 
     def add_ship_coordinate(self, new_coordinate, ship_size):
+        self.list.append(new_coordinate)
         new_coord_tuple = convert_to_tuple(new_coordinate)
-        if not self.verify_not_a_duplicate(new_coord_tuple):
-            return False
         if ship_size == 1:
             self.ship_coordinates[0].append(new_coord_tuple)
-        if ship_size == 2:
+        elif ship_size == 2:
             self.ship_coordinates[1].append(new_coord_tuple)
-        if ship_size == 3:
+        elif ship_size == 3:
             self.ship_coordinates[2].append(new_coord_tuple)
-        if ship_size == 4:
+        elif ship_size == 4:
             self.ship_coordinates[3].append(new_coord_tuple)
-        if ship_size == 5:
+        elif ship_size == 5:
             self.ship_coordinates[4].append(new_coord_tuple)
-        return True
 
     def return_all_coordinates(self):
         return self.ship_coordinates
@@ -39,7 +38,7 @@ class Coordinates:
         print(self.ship_coordinates)
 
     def verify_not_a_duplicate(self, new_tuple):
-        if new_tuple not in self.ship_coordinates:
+        if new_tuple not in self.list:
             return True
         else:
             return False
@@ -66,7 +65,7 @@ def plays_first():
 
 
 def convert_to_tuple(string_coord):
-    tuple_coord = (int(string_coord[1]) - 1, ord(string_coord[0]) - 65)
+    tuple_coord = (int(string_coord[1]) - 1, ord(string_coord[0].upper()) - 65)
     return tuple_coord
 
 
@@ -98,29 +97,29 @@ def add_ship(player, size):
         valid_input = False
         new_coordinate = input("Enter the coordinate (for example, A1) where you would like to place your 1 ship: ")
         while not valid_input:
-            if verify_ship_input(new_coordinate):
-                if player.add_ship_coordinate(new_coordinate, size):
-                    valid_input = True
+            if verify_ship_input(new_coordinate) & player.verify_not_a_duplicate(new_coordinate):
+                player.add_ship_coordinate(new_coordinate, size)
+                valid_input = True
             else:
                 new_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
     if size in range(2, 6):
         valid_input = False
-        start_coordinate = input(f"Enter the start coordinate for your {size} ship: ")
+        start_coordinate = input(f"Enter the START coordinate for your {size} ship: ")
         while not valid_input:
-            if verify_ship_input(start_coordinate):
-                if player.add_ship_coordinate(start_coordinate, size):
-                    valid_input = True
+            if verify_ship_input(start_coordinate) & player.verify_not_a_duplicate(start_coordinate):
+                player.add_ship_coordinate(start_coordinate, size)
+                valid_input = True
             else:
                 start_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
         valid_input = False
-        end_coordinate = input(f"Enter the end coordinate for your {size} ship: ")
+        end_coordinate = input(f"Enter the END coordinate for your {size} ship: ")
         while not valid_input:
-            if verify_ship_input(end_coordinate):
+            if verify_ship_input(end_coordinate) & player.verify_not_a_duplicate(end_coordinate):
                 if verify_ship_size(start_coordinate, end_coordinate, size):
-                    if player.add_ship_coordinate(end_coordinate, size):
-                        valid_input = True
+                    player.add_ship_coordinate(end_coordinate, size)
+                    valid_input = True
                 else:
-                    end_coordinate = input("Either end coordinate is not in the same row or col as start, "
+                    end_coordinate = input("Either END coordinate is not in the same row or col as START, "
                                            "or ship is the incorrect size. Try again: ")
             else:
                 end_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
