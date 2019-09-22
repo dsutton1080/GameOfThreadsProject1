@@ -25,7 +25,7 @@ def play_loop():
 def play_game(initialState):
     """
 
-    :param initialState: 
+    :param initialState:
     """
     lastState = initialState
     curState = initialState

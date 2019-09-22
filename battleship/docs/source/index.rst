@@ -7,8 +7,37 @@ Welcome to battleship's documentation!
 ======================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
+
+
+Game.py
+========
+.. automodule:: game
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Setup.py
+========
+.. automodule:: setup
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Player.py
+==========
+.. automodule:: player
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ship.py
+========
+.. automodule:: ship
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 
 
