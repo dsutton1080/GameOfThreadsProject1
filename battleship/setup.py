@@ -1,10 +1,3 @@
-"""
-Currently the game is fully implemented; however if a player tries,
-    it will let them have two or more ships occupy the same space.
-
-There may be other issues that I have yet to find
-"""
-
 import random
 import game as G
 import string
@@ -26,8 +19,8 @@ class Coordinates:
         :param new_coordinate: A string representing a coordinate, ex. "A1"
         :param ship_size: The size of the ship new_coordinate is a part of
         """
-        self.list.append(new_coordinate)
         new_coord_tuple = convert_to_tuple(new_coordinate)
+        self.list.append(new_coord_tuple)
         if ship_size == 1:
             self.ship_coordinates[0].append(new_coord_tuple)
         elif ship_size == 2:
@@ -45,7 +38,7 @@ class Coordinates:
         :param coordinate: A string representing a coordinate
         :return: False if a player has already placed a ship at the given coordinate, True otherwise
         """
-        if coordinate not in self.list:
+        if convert_to_tuple(coordinate) not in self.list:
             return True
         else:
             return False
@@ -121,10 +114,11 @@ def choose_ships(player, ship_num):
     :param player: Coordinates object presenting one player's ship locations
     :param ship_num: The number of ships a player is to place
     """
-    temp = 1
-    while temp <= ship_num:
+    print("A valid coordinate is a letter A-H followed by a number 1-8 (for example, A1).\n")
+    temp = ship_num
+    while temp >= 1:
         add_ship(player, temp)
-        temp = temp + 1
+        temp = temp - 1
 
 
 def add_ship(player, size):
@@ -135,13 +129,13 @@ def add_ship(player, size):
     """
     if size == 1:
         valid_input = False
-        new_coordinate = input("Enter the coordinate (for example, A1) where you would like to place your 1 ship: ")
+        new_coordinate = input("Enter the coordinate where you would like to place your 1 ship: ")
         while not valid_input:
             if verify_ship_input(new_coordinate) & player.verify_not_a_duplicate(new_coordinate):
                 player.add_ship_coordinate(new_coordinate, size)
                 valid_input = True
             else:
-                new_coordinate = input("Invalid coordinate. Try again: ")
+                new_coordinate = input("Coordinate is either invalid or occupied. Try again: ")
     if size in range(2, 6):
         valid_input = False
         start_coordinate = input(f"Enter the START coordinate for your {size} ship: ")
@@ -150,7 +144,7 @@ def add_ship(player, size):
                 player.add_ship_coordinate(start_coordinate, size)
                 valid_input = True
             else:
-                start_coordinate = input("Invalid or duplicate coordinate. Try again: ")
+                start_coordinate = input("Coordinate is either invalid or occupied. Try again: ")
         valid_input = False
         end_coordinate = input(f"Enter the END coordinate for your {size} ship: ")
         while not valid_input:
@@ -162,7 +156,7 @@ def add_ship(player, size):
                     end_coordinate = input("Either END coordinate is not in the same row or col as START, "
                                            "or ship is the incorrect size. Try again: ")
             else:
-                end_coordinate = input("Invalid or duplicate coordinate. Try again: ")
+                end_coordinate = input("Coordinate is either invalid or occupied. Try again: ")
 
 
 def verify_ship_size(start, end, size):
@@ -221,20 +215,20 @@ def main():
     """
     # startup()
     numOfShips = get_num_of_ships()
-    p1_ships = Coordinates()
-    p2_ships = Coordinates()
+    p1 = Coordinates()
+    p2 = Coordinates()
     print("Player 1's Turn: ")
-    choose_ships(p1_ships, numOfShips)
+    choose_ships(p1, numOfShips)
     print('\n\n\n\n\n\n\n\n\n\n\n\n')
     print("Player 2's Turn: ")
-    choose_ships(p2_ships, numOfShips)
+    choose_ships(p2, numOfShips)
     print('\n\n\n\n\n\n\n\n\n\n\n\n')
     game = G.Game(numOfShips)
-    game.player1.placeShip(p1_ships.ship_coordinates[0][0], p1_ships.ship_coordinates[0][0])
-    game.player2.placeShip(p2_ships.ship_coordinates[0][0], p2_ships.ship_coordinates[0][0])
+    game.player1.placeShip(p1.ship_coordinates[0][0], p1.ship_coordinates[0][0])
+    game.player2.placeShip(p2.ship_coordinates[0][0], p2.ship_coordinates[0][0])
     for i in range(1, numOfShips):
-        game.player1.placeShip(p1_ships.ship_coordinates[i][0], p1_ships.ship_coordinates[i][1])
-        game.player2.placeShip(p2_ships.ship_coordinates[i][0], p2_ships.ship_coordinates[i][1])
+        game.player1.placeShip(p1.ship_coordinates[i][0], p1.ship_coordinates[i][1])
+        game.player2.placeShip(p2.ship_coordinates[i][0], p2.ship_coordinates[i][1])
     while not game.win:
         game.currentPlayer.displayGrids()
         valid_guess = False
@@ -247,12 +241,13 @@ def main():
             else:
                 current_guess = input("Please enter a valid guess: ")
     game.printWinner()
-    p1_ships.reset_everything()
-    p2_ships.reset_everything()
+    p1.reset_everything()
+    p2.reset_everything()
     if play_again():
         print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
         main()
     if not play_again():
         print("Thanks for Playing")
+
 
 main()

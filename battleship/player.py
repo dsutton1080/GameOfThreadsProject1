@@ -42,6 +42,8 @@ class Player:
         for ship in player.shipList:
             if ship.hit(position):
                 print("Hit!")
+                if ship.isSunk:
+                    print(f"You sunk the {ship.size} ship!")
                 input("Press Enter to end turn.")
                 self.guessGrid[position[0]][position[1]] = "H"
                 player.shipGrid[position[0]][position[1]] = "X"
