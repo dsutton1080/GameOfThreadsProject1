@@ -1,18 +1,13 @@
-'''
+"""
 Currently the game is fully implemented; however if a player tries,
     it will let them have two or more ships occupy the same space.
 
 There may be other issues that I have yet to find
-'''
+"""
 
 import random
 import game as G
 import string
-
-
-def convert_to_tuple(string_coord):
-    tuple_coord = (int(string_coord[1]) - 1, ord(string_coord[0]) - 65)
-    return tuple_coord
 
 
 class Coordinates:
@@ -23,6 +18,8 @@ class Coordinates:
 
     def add_ship_coordinate(self, new_coordinate, ship_size):
         new_coord_tuple = convert_to_tuple(new_coordinate)
+        if not self.verify_not_a_duplicate(new_coord_tuple):
+            return False
         if ship_size == 1:
             self.ship_coordinates[0].append(new_coord_tuple)
         if ship_size == 2:
@@ -33,12 +30,19 @@ class Coordinates:
             self.ship_coordinates[3].append(new_coord_tuple)
         if ship_size == 5:
             self.ship_coordinates[4].append(new_coord_tuple)
+        return True
 
     def return_all_coordinates(self):
         return self.ship_coordinates
 
     def print_all_coordinates(self):
         print(self.ship_coordinates)
+
+    def verify_not_a_duplicate(self, new_tuple):
+        if new_tuple not in self.ship_coordinates:
+            return True
+        else:
+            return False
 
 
 def startup():
@@ -59,6 +63,11 @@ def plays_first():
     elif coin_choice.lower() != correct:
         print("If you chose " + correct + " you are Player2")
         print("The other person is Player1")
+
+
+def convert_to_tuple(string_coord):
+    tuple_coord = (int(string_coord[1]) - 1, ord(string_coord[0]) - 65)
+    return tuple_coord
 
 
 def get_num_of_ships():
@@ -90,8 +99,8 @@ def add_ship(player, size):
         new_coordinate = input("Enter the coordinate (for example, A1) where you would like to place your 1 ship: ")
         while not valid_input:
             if verify_ship_input(new_coordinate):
-                player.add_ship_coordinate(new_coordinate, size)
-                valid_input = True
+                if player.add_ship_coordinate(new_coordinate, size):
+                    valid_input = True
             else:
                 new_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
     if size in range(2, 6):
@@ -99,8 +108,8 @@ def add_ship(player, size):
         start_coordinate = input(f"Enter the start coordinate for your {size} ship: ")
         while not valid_input:
             if verify_ship_input(start_coordinate):
-                player.add_ship_coordinate(start_coordinate, size)
-                valid_input = True
+                if player.add_ship_coordinate(start_coordinate, size):
+                    valid_input = True
             else:
                 start_coordinate = input("Invalid Input. Please enter a valid coordinate: ")
         valid_input = False
@@ -108,8 +117,8 @@ def add_ship(player, size):
         while not valid_input:
             if verify_ship_input(end_coordinate):
                 if verify_ship_size(start_coordinate, end_coordinate, size):
-                    player.add_ship_coordinate(end_coordinate, size)
-                    valid_input = True
+                    if player.add_ship_coordinate(end_coordinate, size):
+                        valid_input = True
                 else:
                     end_coordinate = input("Either end coordinate is not in the same row or col as start, "
                                            "or ship is the incorrect size. Try again: ")
@@ -142,10 +151,12 @@ def main():
     numOfShips = get_num_of_ships()
     p1_ships = Coordinates()
     p2_ships = Coordinates()
+    print("Player 1's Turn: ")
     choose_ships(p1_ships, numOfShips)
     print('')
+    print("Player 2's Turn: ")
     choose_ships(p2_ships, numOfShips)
-    print('\n\n\n\n\n')
+    print('\n\n\n\n\n\n\n\n')
     game = G.Game(numOfShips)
     game.player1.placeShip(p1_ships.ship_coordinates[0][0], p1_ships.ship_coordinates[0][0])
     game.player2.placeShip(p2_ships.ship_coordinates[0][0], p2_ships.ship_coordinates[0][0])
