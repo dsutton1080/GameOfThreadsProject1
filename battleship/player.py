@@ -17,8 +17,8 @@ class Player:
     def placeShip(self, start, end):
         """
 
-        :param start:
-        :param end:
+        :param start: A 2-tuple representing a start coordinate
+        :param end: A 2-tuple representing an end coordinate
         """
         newShip = S.createShip(start, end)
         for pos in newShip.getPositions():
