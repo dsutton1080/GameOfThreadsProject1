@@ -349,8 +349,9 @@ def run_game_loop(shipCoords1, shipCoords2):
                                 sys.exit()
                             elif event.type == KEYDOWN or event.type == MOUSEBUTTONDOWN:
                                 screen.fill(colors['BLACK'])
-                                return
-            pygame.time.delay(200)
+                                return True
+            pygame.time.delay(50)
+        return False
 
     while True:
         whosTurnTextBox = TextBox("{}'s Turn".format(state.player1.name), (SCREEN_WIDTH * (3 / 8), 40), fontsize=64, textcolor=colors['GREEN'])
@@ -393,8 +394,9 @@ def run_game_loop(shipCoords1, shipCoords2):
                             state.update(guess)
                         pygame.display.flip()
                         pygame.time.delay(1500)
-                        run_switch_turns()
-                        screen.fill(colors['BLACK'])
+                        if run_switch_turns():
+                            screen.fill(colors['BLACK'])
+                            break
         pygame.display.flip()
         pygame.time.delay(30)
 
