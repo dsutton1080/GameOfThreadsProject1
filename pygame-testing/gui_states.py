@@ -297,7 +297,7 @@ def run_choose_board_location(ship, otherShipCoords):
 def run_game_loop(shipCoords1, shipCoords2):
 
     switchTurnsInstructionsBox = TextBox("Press the SPACE key to switch turns.", (240, 48))
-    switchTurnsInstructionsBox2 = TextBox("Please switch spots with your playing partner. Press SPACE to continue.", (35, SCREEN_HEIGHT / 2), fontsize=44)
+    switchTurnsInstructionsBox2 = TextBox("Please switch spots with your playing partner. Press any key to continue.", (35, SCREEN_HEIGHT / 2), fontsize=44)
     guessBoardLabel = TextBox("Attack Board", (200, SCREEN_HEIGHT / 5), textcolor=colors['RED'])
     myBoardLabel = TextBox("My Board", (SCREEN_WIDTH - 370, SCREEN_HEIGHT / 5), textcolor=colors['GREEN'])
     hitTextBox = TextBox("Hit!", ((SCREEN_WIDTH / 2) - 70, SCREEN_HEIGHT * (8 / 10)), textcolor=colors['GREEN'], fontsize=96)
@@ -324,7 +324,7 @@ def run_game_loop(shipCoords1, shipCoords2):
                     return square.grid_coord
                 elif event.type == pygame.MOUSEMOTION and not square.rect.collidepoint(event.pos):
                     return None
-            pygame.time.delay(50)
+            pygame.time.delay(30)
 
     def run_switch_turns():
         # display switch turns instruction message
@@ -347,7 +347,7 @@ def run_game_loop(shipCoords1, shipCoords2):
                             if event.type == pygame.QUIT:
                                 pygame.quit()
                                 sys.exit()
-                            elif event.type == KEYUP and event.key == pygame.K_SPACE:
+                            elif event.type == KEYDOWN or event.type == MOUSEBUTTONDOWN:
                                 screen.fill(colors['BLACK'])
                                 return
             pygame.time.delay(200)
@@ -396,7 +396,7 @@ def run_game_loop(shipCoords1, shipCoords2):
                         run_switch_turns()
                         screen.fill(colors['BLACK'])
         pygame.display.flip()
-        pygame.time.delay(50)
+        pygame.time.delay(30)
 
 
 # returns a boolean indicating whether or not to play again
