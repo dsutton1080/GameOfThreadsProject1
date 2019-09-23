@@ -131,32 +131,41 @@ def add_ship(player, size):
         valid_input = False
         new_coordinate = input("Enter the coordinate where you would like to place your 1 ship: ")
         while not valid_input:
-            if verify_ship_input(new_coordinate) & player.verify_not_a_duplicate(new_coordinate):
-                player.add_ship_coordinate(new_coordinate, size)
-                valid_input = True
+            if verify_ship_input(new_coordinate):
+                if player.verify_not_a_duplicate(new_coordinate):
+                    player.add_ship_coordinate(new_coordinate, size)
+                    valid_input = True
+                else:
+                    new_coordinate = input("Coordinate is occupied. Try again:")
             else:
-                new_coordinate = input("Coordinate is either invalid or occupied. Try again: ")
+                new_coordinate = input("Coordinate is invalid. Try again: ")
     if size in range(2, 6):
         valid_input = False
         start_coordinate = input(f"Enter the START coordinate for your {size} ship: ")
         while not valid_input:
-            if verify_ship_input(start_coordinate) & player.verify_not_a_duplicate(start_coordinate):
-                player.add_ship_coordinate(start_coordinate, size)
-                valid_input = True
+            if verify_ship_input(start_coordinate):
+                if player.verify_not_a_duplicate(start_coordinate):
+                    player.add_ship_coordinate(start_coordinate, size)
+                    valid_input = True
+                else:
+                    start_coordinate = input("Coordinate is occupied. Try again:")
             else:
-                start_coordinate = input("Coordinate is either invalid or occupied. Try again: ")
+                start_coordinate = input("Coordinate is invalid. Try again: ")
         valid_input = False
         end_coordinate = input(f"Enter the END coordinate for your {size} ship: ")
         while not valid_input:
-            if verify_ship_input(end_coordinate) & player.verify_not_a_duplicate(end_coordinate):
-                if verify_ship_size(start_coordinate, end_coordinate, size):
-                    player.add_ship_coordinate(end_coordinate, size)
-                    valid_input = True
+            if verify_ship_input(end_coordinate):
+                if player.verify_not_a_duplicate(end_coordinate):
+                    if verify_ship_size(start_coordinate, end_coordinate, size):
+                        player.add_ship_coordinate(end_coordinate, size)
+                        valid_input = True
+                    else:
+                        end_coordinate = input("Either END coordinate is not in the same row or col as START, "
+                                               "or ship is the incorrect size. Try again: ")
                 else:
-                    end_coordinate = input("Either END coordinate is not in the same row or col as START, "
-                                           "or ship is the incorrect size. Try again: ")
+                    end_coordinate = input("Coordinate is occupied. Try again:")
             else:
-                end_coordinate = input("Coordinate is either invalid or occupied. Try again: ")
+                end_coordinate = input("Coordinate is invalid. Try again: ")
 
 
 def verify_ship_size(start, end, size):
