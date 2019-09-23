@@ -15,5 +15,3 @@ def run():
         player2ships = gui_states.run_place_ships(num, "Player 2")
         winnerName = gui_states.run_game_loop(player1ships, player2ships)
         play_again = gui_states.winner_screen_prompt_replay(winnerName)
-
-run()
