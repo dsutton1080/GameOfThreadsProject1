@@ -9,3 +9,6 @@
 * [sys](https://docs.python.org/2/library/sys.html)
 * [os](https://docs.python.org/3/library/os.html)
 * [sphinx (documentation)](http://www.sphinx-doc.org/en/master/)
+
+### Note:
+The **Retrospective Write-up** is in the 'doc' directory.
