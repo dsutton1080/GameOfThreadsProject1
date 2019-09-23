@@ -11,4 +11,4 @@
 * [sphinx (documentation)](http://www.sphinx-doc.org/en/master/)
 
 ### Note:
-The **Retrospective Write-up** is in the 'doc' directory.
+The **Retrospective Write-up** is in [this directory](../doc).
