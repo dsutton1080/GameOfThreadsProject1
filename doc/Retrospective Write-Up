@@ -1,0 +1,132 @@
+Meeting 7
+9/22 in Fishbowl @ 9:00
+Members: DeRon, Jace, Rick, Will, Chris
+Terminal based functions properly
+Rick was able to get sphinx to work sort of correctly
+Working on getting everything on there
+Jace almost has the gui finished
+Have an option for both GUI and terminalBased?
+----------------------------------------------------------------------------------------------------
+Meeting 6
+9/20 in Lab @ 2:00
+Members: DeRon, Jace, Rick, Will, Chris
+Crunch time
+Started doing terminal based as a back up
+Jace is slowly getting the gui to function
+Ship selection works
+Chris and Rick are trying to still figure out documentation with sphinx
+----------------------------------------------------------------------------------------------------
+Meeting 5
+9/18, in Lecture @ 11:30 
+Members: DeRon, Jace, Chris, Rick, WIll
+Looking into switching to terminal based
+Got everything pretty much set up
+Rick and Chris are looking into Sphinx documentation
+
+
+
+Meeting 4
+9/16, in Lecture @ 11:35 
+Members: DeRon, Jace, Chris, Rick, WIll
+
+Interface
+Discussing which GUI to use. 
+Spent the weekend researching pyGame and arcade which are GUI’s used to display the program 
+Text input on the GUI is easier 
+Talked about back-plans just in case we can’t figure out how to make the GUI work
+Our backup would be to just use the terminal 
+Using a 2D array of objects instead of a list of objects 
+
+----------------------------------------------------------------------------------------------------
+Meeting 3
+9/13, In Lecture @ 11:35 
+Members: DeRon, Jace, Chris, Rick, Will 
+
+Main Object Creation (Jace) 
+Hand wrote general code for main program
+How are we going to model it
+IO and data modules
+
+Interface (Chris and Rick)
+I was able to mess around with pygame and arcade, but am running into an issue with getting multiple grids to load up correctly with the correct pixel coords
+Might pass on the interface to Jace to see if he can do anything about it
+Looking into sphinx documentation
+
+Setting Up (DeRon) 
+Ask how many ships the player wants (1 to 5) 
+The size of each ship is determined by how many ships there are 
+If a total of 1 ship is chosen, then each player gets a single 1x1 ship
+If a total of 2 ships is chosen, then each player gets a 1x1 and 1x2 ship
+This continues up to 5, where each player will a 1x1, 1x2, 1x3, 1x4, and a 1x5
+Choose who plays first 
+Let the first player place their ships, then the second player places theirs 
+
+Main Gameplay Loop (Will) 
+
+
+
+Closing (DeRon) 
+Once all the ships for a player is destroyed, the game ends and a prompt is displayed declaring the game is over, prompt the player the option to play again or quit 
+----------------------------------------------------------------------------------------------------
+Meeting 2
+9/11, In Lecture @ 11:35 
+Members: DeRon, Jace, Chris, Rick, Will 
+
+What We’ve done since meeting 1:
+Touched up on our python knowledge 
+
+Project Roles 
+Chris Hardin and Rick  - Interface 
+DeRon - Setting up and closing the game 
+Jace - Main Object creation 
+Will - Main Gameplay Loop 
+
+Ideas 
+Dropdown for user input for battleship coordinates instead of letting them type them in 
+Class for user and board
+
+
+----------------------------------------------------------------------------------------------------
+Meeting 1
+9/6, In Lecture @ 11:30
+Members: Deron, Jace, Chris, Will
+
+Language Discussion 
+Python or C++ ?
+For c++ we have to maintain header files and executables, but it allows us to split the work up easier. 
+Python is easier to work with, but it would require us to work on the same document and work through multiple merge request. 
+
+Language Choice 
+Work with Python, put different features in different files/modules and import those modules to the main python file to ensure that we each have different working spaces. 
+For the customer view, display it using a browser through local host once we have the program running.
+Use Pycharm as an IDE since it has a built in terminal, manages all the different versions of plugins. 
+__________________________________________________________________________
+
+
+
+
+
+How work was split between team:
+Jace - Fully implemented the GUI version of battleship. 
+Chris - Worked with Jace to research and implement the GUI version, researched programs that would automatically generate documentation, and assisted Will and DeRon on the terminal version. 
+Rick - Worked with Jace to research GUI version, researched and implemented documentation for project. 
+DeRon - Fully implemented the Terminal version of battleship. Primarily worked on the setup and closing of game. 
+Will - Fully implemented the Terminal version of battleship. Primarily worked on the main gameplay loop for the program. 
+
+
+Challenges:
+
+The main challenge throughout this first project was that we had underestimated the work required to implement a game with some sort of GUI. We were in agreement that we would prefer not to make our version of battleship a terminal-based game, both because we had members eager to take on the challenge of a GUI, but also because we generally disliked the aesthetic of a purely terminal based game. However, toward the end of the project it became less clear whether we would be able to finish the GUI version in time, so we branched off into two different versions of  the game. To make sure everyone’s work on the project got represented in the demoable version, we considered giving the user an option to choose between a terminal-based experience or one with the GUI.
+
+Another issue we had was that we were all working independently on different components of the full without as much regard as we should have as to how the components would fit together. We all had similar ideas for how the overall project should fit together, but not identical. The differences in our ideas of what components are necessary and how they should interact resulted in components that were not easy to integrate smoothly. This resulted in on multiple members working to implement the same functionality differently because it was unclear which component should be responsible for that piece of functionality (e.g. should the GUI module be responsible for keeping track of the player’s boards or just displaying them?).
+
+
+Future Improvements: 
+
+	These types of challenges could have been avoided with clearer and more thorough communication between the members in the early stages of the project. This way we could have better planned out and agreed upon how components should work before we started trying to implement them separately. Also, we could have split the work up differently so that every member was not working on something independent of the other members. That way we could avoid the case of multiple people working to implement the same functionality.
+
+
+Things We would have done Differently: 
+	
+GUI or Terminal: It was not our goal to implement both a GUI and terminal, but is the outcome we reached since we had a bit of trouble with communication initially. It would have been better and more efficient if we discussed in depth what type of battleship we wanted to implement
+Choosing a Language: Not everyone in our group was proficient in python and some of us had to research and learn python before they could begin development. It would have made sense for us to either program in c++ since we all know it or have a deeper discussion on what language to use for development.
