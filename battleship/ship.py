@@ -6,7 +6,7 @@
 class Ship:
     def __init__(self, size, coords):
         """
-
+        Initialization for the Ship Class
         :param size: The length of the ship
         :param coords: List of two-element lists, containing a 2-tuple and a boolean value
         """
@@ -17,7 +17,7 @@ class Ship:
 
     def getCoordIndex(self, position):
         """
-
+        Helper function for Hit method
         :param position: A 2-tuple representing a grid position
         :return: The index in coords in which position appears. Returns -1 if not found
         """
@@ -28,7 +28,7 @@ class Ship:
 
     def getPositions(self):
         """
-
+        A function that returns a list that contain grid positions
         :return: A list of grid positions; self.coords except without the boolean values
         """
         positions = []
@@ -41,7 +41,7 @@ class Ship:
     #   Returns True on a success and False if the ship does not occupy the given position
     def hit(self, position):
         """
-
+        Changes the boolean value associated with a coordinate to True
         :param position: A 2-tuple representing a grid location
         :return: True if the the hit is a success, false otherwise
         """
@@ -61,7 +61,7 @@ class Ship:
 #   The start and end parameters should be 2-tuples given as (row, column)
 def createShip(start, end):
     """
-
+    Returns a ship object when given a start coordinate and end coordinate
     :param start: A 2-tuple given as (row, column)
     :param end: A 2-tuple given as (row, column)
     :return: A Ship object whose ends are located at the given parameters

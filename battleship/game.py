@@ -4,7 +4,7 @@ import player as P
 class Game:
     def __init__(self, numShips):
         """
-
+        Initializes the game
         :param numShips: The number of ships players start with
         """
         self.win = False
@@ -16,7 +16,7 @@ class Game:
 
     def advancePlayer(self):
         """
-
+        Changes who the current player is
         """
         self.nextPlayer = self.currentPlayer
         if self.currentPlayer == self.player1:
@@ -26,7 +26,7 @@ class Game:
 
     def turn(self, guess):
         """
-
+        Changes who's turn it is, calls advancePlayer to switch turns
         :param guess: The position a player has guessed
         """
         self.currentPlayer.guess(guess, self.nextPlayer)
@@ -37,7 +37,7 @@ class Game:
 
     def printWinner(self):
         """
-
+        Print's out the winner of the game
         """
         if self.nextPlayer == self.player1:
             print("Player 1 Wins!")
