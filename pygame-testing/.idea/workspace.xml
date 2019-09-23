@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c3e45a1-106c-4b6b-8ef8-4e8d4625d2ca" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui_states.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui_states.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/battleship-old.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/battleship.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/game.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/player.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ship.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +28,7 @@
   <component name="ProjectId" id="1QsRPilCOqRqFcaaXvxnL9qDPJh" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/control.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../battleship/gui_version" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
