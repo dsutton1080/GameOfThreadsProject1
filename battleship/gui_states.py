@@ -7,9 +7,9 @@ import pygame
 from pygame.locals import *
 from functools import reduce
 
-pygame.init()
-pygame.display.set_caption("Battleship")
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+# pygame.init()
+# pygame.display.set_caption("Battleship")
+# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 imageBattleshipSurface = pygame.image.load('battleship-1200x900.jpg').convert()
 blackBackground = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
