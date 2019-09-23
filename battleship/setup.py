@@ -4,18 +4,17 @@ import string
 
 
 class Coordinates:
-    # variables
 
     def __init__(self):
         """
-
+        Initializes the Coordinates Class
         """
         self.ship_coordinates = [[], [], [], [], []]
         self.list = []
 
     def add_ship_coordinate(self, new_coordinate, ship_size):
         """
-
+        Adds a coordinate tuple to the ship_coordinates tuple list
         :param new_coordinate: A string representing a coordinate, ex. "A1"
         :param ship_size: The size of the ship new_coordinate is a part of
         """
@@ -34,7 +33,7 @@ class Coordinates:
 
     def verify_not_a_duplicate(self, coordinate):
         """
-
+        Verify's that the coordinate being added is a unique coordinate
         :param coordinate: A string representing a coordinate
         :return: False if a player has already placed a ship at the given coordinate, True otherwise
         """
@@ -49,7 +48,7 @@ class Coordinates:
 
 def startup():
     """
-
+    Print's a welcome message and calls the method plays_first
     """
     print("Welcome to Battleship!")
     plays_first()
@@ -57,7 +56,7 @@ def startup():
 
 def plays_first():
     """
-
+    Helps the user decide who will be 1st player
     """
     coin_choice = input("Heads or tails?: ")
     coin_list = ["heads", "tails"]
@@ -75,7 +74,7 @@ def plays_first():
 
 def convert_to_tuple(string_coord):
     """
-
+    Takes the user input which is a string and returns a tuple
     :param string_coord: A string representing a coordinate,  ex. "A1"
     :return: A 2-tuple representing the same coordinate, ex. (0, 0)
     """
@@ -85,7 +84,7 @@ def convert_to_tuple(string_coord):
 
 def get_num_of_ships():
     """
-
+    Asks the user how many ships they want to play with
     :return: The number of ships in the range 1 to 5 that the user inputs
     """
     num_ships = input("How many ships should each player have: ")
@@ -97,7 +96,7 @@ def get_num_of_ships():
 
 def test_input(num_ships):
     """
-
+    Verification to ensure the user input entered a number between 1 and 5
     :param num_ships: Any input
     :return: True if the input is a number from 1 to 5, False otherwise
     """
@@ -110,7 +109,7 @@ def test_input(num_ships):
 
 def choose_ships(player, ship_num):
     """
-
+    Lets the player input their ship coordinates for their ships
     :param player: Coordinates object presenting one player's ship locations
     :param ship_num: The number of ships a player is to place
     """
@@ -123,7 +122,7 @@ def choose_ships(player, ship_num):
 
 def add_ship(player, size):
     """
-
+    Gets the ship coordinate that the player wants and checks that the user entered a valid entry
     :param player: Coordinates object presenting one player's ship locations
     :param size: The size of the ship being placed
     """
@@ -170,7 +169,7 @@ def add_ship(player, size):
 
 def verify_ship_size(start, end, size):
     """
-
+    Checks to make sure that the size of the ship is legal
     :param start: string representing the coordinate for one end of a ship
     :param end: string representing the coordinate for the other end of the ship
     :param size: The length that the ship is supposed to be
@@ -188,7 +187,7 @@ def verify_ship_size(start, end, size):
 
 def verify_ship_input(possible_coordinate):
     """
-
+    Checks the user input to make sure their coordinate is in the form of A1, A2, ... , H7, H8
     :param possible_coordinate: Any input
     :return: True if the input is a string in the form of a valid coordinate, False otherwise
     """
@@ -201,6 +200,10 @@ def verify_ship_input(possible_coordinate):
 
 
 def play_again():
+    """
+    Lets the user play the game again if they want
+    :return: True if they want to play again and False if they don't want to
+    """
     correct_answers = ["Yes", "Y", "y", "yes", "YES"]
     wrong_answers = ["No", "N", "n", "no", "NO"]
     ans = input("Do you want to play again (Yes/No): ")
@@ -220,7 +223,7 @@ def play_again():
 
 def main():
     """
-
+    Main function that runs the game
     """
     # startup()
     numOfShips = get_num_of_ships()
