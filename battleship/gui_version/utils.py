@@ -19,6 +19,11 @@ SCREEN_HEIGHT = 900
 
 
 def flatten(ls):
+    """
+    A utility function that flattens a list
+    :param ls: A possibly nested list
+    :return: The flattened list
+    """
     def flatten_element(e):
         if isinstance(e, list):
             if not e:

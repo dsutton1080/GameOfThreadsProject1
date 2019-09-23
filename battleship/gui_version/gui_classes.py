@@ -1,6 +1,3 @@
-# import data.game as G
-# import data.player as P
-# import data.ship as S
 
 from utils import flatten, colors, SCREEN_WIDTH, SCREEN_HEIGHT
 import pygame
@@ -11,17 +8,34 @@ from copy import deepcopy
 
 
 class State:
+    """
+    Used in the main game loop to switch the current player. It stores the state of both players.
+    """
     def __init__(self, player1, player2):
+        """
+        Initialization method for the State class
+        :param player1: A Player object
+        :param player2: A Player object
+        """
         self.player1 = player1
         self.player2 = player2
         self.iterations = 0
 
     def update(self, guess):
+        """
+        Updates the state based by adding the guess and "flipping" the players.
+        :param guess: a coordinate
+        :return: void
+        """
         self.player1.add_guess(guess)
         self.player2, self.player1 = self.player1, self.player2
         self.iterations += 1
 
     def is_game_over(self):
+        """
+        Cross references the guesses versus the other player's ships and checks whether the game is over.
+        :return: boolean
+        """
         def gameover(guesses, ships):
             return all(map(lambda shipcoord: shipcoord in guesses, flatten(ships)))
 
@@ -29,16 +43,32 @@ class State:
 
 
 class Player:
+    """
+    Represents the encapsulation of ships, guesses, and name of a player
+    """
     def __init__(self, ships, name):
+        """
+        Creates the player
+        :param ships: A list of list of coordinates to populate the player's ships
+        :param name: The string representing the player's name
+        """
         self.ships = ships
         self.guesses = []
         self.name = name
 
     def add_guess(self, coord):
+        """
+        Append a guess coordinate to the player's guesses
+        :param coord: The guess coordinate
+        :return: void
+        """
         self.guesses.append(coord)
 
 
 class BoardSquare(pygame.sprite.Sprite):
+    """
+    Encapsulates the displayable idea of a board square with dimensional and color properties
+    """
     def __init__(self,
                  grid_coord,
                  window_coord,
@@ -54,15 +84,30 @@ class BoardSquare(pygame.sprite.Sprite):
         self.surface.fill(self.color)
 
     def update_color(self, color):
+        """
+        Updates the color of the board square
+        :param color: an RGB value
+        :return: void
+        """
         self.color = color
 
 
 class Board:
+    """
+    The logical combination of displayable components to draw a board. Stores dimension data.
+    """
     def __init__(self,
                  window_location,
                  width,
                  height,
                  squares=None):
+        """
+        Creates the board given the dimensions
+        :param window_location: The window coordinate of the top left
+        :param width: The width of the board
+        :param height: The height of the board
+        :param squares: An optional list of pre-defined squares to display to the board
+        """
         super(Board, self).__init__()
         self.window_location = window_location
         self.width = width
@@ -84,6 +129,10 @@ class Board:
         self.colLabels = self.create_col_labels()
 
     def create_board_squares(self):
+        """
+        Generates a generic list of grey BoardSquare objects
+        :return: A list of BoardSquare objects
+        """
         x, y = self.window_location
         squares = []
         offsetY = 0
@@ -101,6 +150,10 @@ class Board:
         return squares
 
     def create_row_labels(self):
+        """
+        Generates a list of TextBox objects to be the row labels
+        :return: a list of TextBox objects
+        """
         x, y = self.window_location
         fontSize = floor(min(self.squareHeight, self.squareWidth))
 
@@ -111,6 +164,10 @@ class Board:
         return reduce(lambda others, i: others + [create_label(i)], range(1, 9), [])
 
     def create_col_labels(self):
+        """
+        Generates a list of TextBox objects to be the column labels
+        :return: a list of TextBox objects
+        """
         x, y = self.window_location
         fontSize = floor(min(self.squareHeight, self.squareWidth))
 
@@ -121,6 +178,9 @@ class Board:
 
 
 class TextBox(pygame.sprite.Sprite):
+    """
+    An encapsulation of a displayable text box with text
+    """
     def __init__(self,
                  message,
                  window_coord=(0, 0),
@@ -128,6 +188,15 @@ class TextBox(pygame.sprite.Sprite):
                  backgroundcolor=colors['BLACK'],
                  fontsize=48,
                  font=None):
+        """
+        Creates the text box.
+        :param message: The string to display in the text box
+        :param window_coord: The coordinate that represents the window location
+        :param textcolor: The RGB text color
+        :param backgroundcolor: The RGB background color
+        :param fontsize: The integer representing the font size
+        :param font: The font style (optional)
+        """
         super(TextBox, self).__init__()
         self.message = message
         self.window_coord = window_coord
@@ -143,6 +212,9 @@ class TextBox(pygame.sprite.Sprite):
 
 
 class Ship(pygame.sprite.Sprite):
+    """
+    Encapsulates a displayable Ship object for the coord placement procedure.
+    """
     def __init__(self,
                  length,
                  squareWidth,

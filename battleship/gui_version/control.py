@@ -2,6 +2,10 @@ import gui_states
 
 
 def run():
+    """
+    The executive procedure that defines the control flow between all the sub-procedures.
+    :return: void
+    """
     play_again = True
     gui_states.screen.fill((0, 0, 0))
     while play_again:

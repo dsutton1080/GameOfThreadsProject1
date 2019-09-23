@@ -123,13 +123,13 @@ def generate_guessed_at_board(coordCodePairList):
 
 def generate_color_squares(coordCodePairList, encodingContext, window_location, width, height):
     """
-
-    :param coordCodePairList: 
-    :param encodingContext:
-    :param window_location:
-    :param width:
-    :param height:
-    :return:
+    This function uses multiple parameters to generate squares that will be used to display a board.
+    :param coordCodePairList: the list of the coordinate, code pairs that encode the creation of the board squares
+    :param encodingContext: The type of board context that indicates the way the board squares are created
+    :param window_location: The window coordinates for the future board
+    :param width: The board width where the squares will be displayed
+    :param height: The board height where the squares will be displayed
+    :return: a list of all the squares that will fill a board
     """
     offset = SCREEN_HEIGHT / 400
     squareWidth = (width / 9) - offset
@@ -165,69 +165,111 @@ def board_from_coord_code_pairs(coordCodePairList,
                                  window_location,
                                  width,
                                  height):
+    """
+    This function uses multiple parameters to generate squares that will display the board. It is essentially a wrapper to
+    :param coordCodePairList: the list of the coordinate, code pairs that encode the creation of the board squares
+    :param encodingContext: The type of board context that indicates the way the board squares are created
+    :param window_location: The window coordinates for the future board
+    :param width: The board width
+    :param height: The board height
+    :return: a board with colored squares
+    """
     return Board(window_location, width, height, squares=generate_color_squares(coordCodePairList, encodingContext, window_location, width, height))
 
 
 # context is either "placement", "guess", or "guessedat"
 # 0 should be the default grey value
 def code_to_color(context, code):
+    """
+    Based on the context, it will decode the code into an RGB code
+    :param context: a string representing the type of board being displayed
+    :param code: a single digit integer
+    :return: an RGB value for a color
+    """
 
-        mapping = {
-           "placement": {
-               0: colors['GREY'],     # Default. Not filled or suggested.
-               1: colors['GREEN'],    # Suggested placement
-               2: colors['BLUE']      # Already filled by another placed ship
-           },
-            "guess": {
-                0: colors['GREY'],  # Not guessed
-                1: colors['RED'],   # Missed
-                2: colors['GREEN']  # Hit
-            },
-            "guessed_at": {
-                0: colors['GREY'],         # Not guessed
-                1: colors['LIGHT-RED'],    # They missed our ship
-                2: colors['BLUE'],         # Our ship, not guessed
-                3: colors['DARK-RED']      # Our ship, they hit
-            }
-
+    mapping = {
+       "placement": {
+           0: colors['GREY'],     # Default. Not filled or suggested.
+           1: colors['GREEN'],    # Suggested placement
+           2: colors['BLUE']      # Already filled by another placed ship
+       },
+        "guess": {
+            0: colors['GREY'],  # Not guessed
+            1: colors['RED'],   # Missed
+            2: colors['GREEN']  # Hit
+        },
+        "guessed_at": {
+            0: colors['GREY'],         # Not guessed
+            1: colors['LIGHT-RED'],    # They missed our ship
+            2: colors['BLUE'],         # Our ship, not guessed
+            3: colors['DARK-RED']      # Our ship, they hit
         }
-        return mapping[context][code]
+    }
+    return mapping[context][code]
 
 
 def get_hovered_square(pos, board):
+    """
+    Returns a BoardSquare object that is being hovered on.
+    :param pos: The window position coordinates
+    :param board: The Board object where the square resides
+    :return: A BoardSquare object
+    """
     return get_intersect_object_from_list(pos, board.squares)
 
 
 def cover_instructions(surface, textbox):
+    """
+    Draws over a textbox to make it disappear.
+    :param surface: The pygame Surface object to draw on.
+    :param textbox: The TextBox object to cover.
+    :return: void
+    """
     surface.blit(textbox.surface, textbox.surface.fill(colors['BLACK']).move(textbox.window_coord))
 
 
 def blit_board(surface, board):
+    """
+    Draws a Board object on a pygame Surface object.
+    :param surface: a pygame Surface object
+    :param board: a Board object
+    :return: void
+    """
     return blit_objects(surface, board.squares + board.rowLabels + board.colLabels)
 
 
 def blit_objects(surface, objlist):
+    """
+    Draws a list of objects on a pygame Surface object
+    :param surface: a pygame Surface object
+    :param objlist: a list of objects with surface and rect attributes
+    :return: void
+    """
     for obj in objlist:
         surface.blit(obj.surface, obj.rect)
 
 
 def highlight(surface, obj, color):
+    """
+    Colors an object and draws it on a Surface
+    :param surface: a pygame Surface object
+    :param obj: an object with surface and rect attributes
+    :param color: an RGB tuple
+    :return: void
+    """
     obj.surface.fill(color)
     obj.rect = obj.surface.get_rect(x=obj.window_coord[0], y=obj.window_coord[1])
     surface.blit(obj.surface, obj.rect)
     pygame.display.update(obj)
 
 
-def quit_actions():
-    pygame.quit()
-    sys.exit()
-
-
-def is_quit_case(event):
-    return event == pygame.QUIT
-
-
 def get_intersect_object_from_list(pos, ls):
+    """
+    Scans a list of objects and returns the list of objects that is targeted by a given position.
+    :param pos: a window coordinate
+    :param ls: a list of displayable objects
+    :return: a displayable object or None
+    """
     for obj in ls:
         if obj.rect.collidepoint(pos):
             return obj
@@ -235,10 +277,22 @@ def get_intersect_object_from_list(pos, ls):
 
 
 def next_orientation(currentOrientation):
+    """
+    Returns the incremented orientation code (mod 4).
+    :param currentOrientation: an integer encoding (1 - 3)
+    :return: an integer (1 - 3)
+    """
     return (currentOrientation + 1) % 4
 
 
 def orientation_to_ship_end_coord(anchor, shipLength, orientation):
+    """
+    Given an orientation encoding and the length of a ship, returns a coordinate at the end of the ship
+    :param anchor: The starting coordinate of the ship
+    :param shipLength: An integer 1-5
+    :param orientation: An integer code 0-3
+    :return: A coordinate representing the end of the ship
+    """
     orientation = orientation % 4
     row, col = anchor
     mapping = {
@@ -251,6 +305,11 @@ def orientation_to_ship_end_coord(anchor, shipLength, orientation):
 
 
 def is_on_board(coord):
+    """
+    Checks to see whether a coordinate is a valid coordinate for our playing board
+    :param coord: a (row, col) coordinate
+    :return: boolean
+    """
     x, y = coord
     if (x > 0) and (x < 9) and (y > 0) and (y < 9):
         return True
@@ -258,6 +317,12 @@ def is_on_board(coord):
 
 
 def is_coord_conflict(coordList1, coordList2):
+    """
+    Used when placing ships. Returns whether or not there is a coordinate conflict between list of coordinates (ships).
+    :param coordList1: A list of coordinates
+    :param coordList2: A list of coordinates
+    :return: boolean
+    """
     for coord in coordList1:
         if coord in coordList2:
             return True
@@ -265,12 +330,26 @@ def is_coord_conflict(coordList1, coordList2):
 
 
 def is_possible_orientation(anchor, shipLength, orientation, otherFilledCoords):
+    """
+    Checks whether a ship orientation is valid to place.
+    :param anchor: The start coordinate of the ship.
+    :param shipLength: An integer 1-5.
+    :param orientation: An orientation code integer 0-3
+    :param otherFilledCoords: The list of other coordinates to check against
+    :return: boolean
+    """
     return (is_on_board(orientation_to_ship_end_coord(anchor, shipLength, orientation))) and (
         not is_coord_conflict(orientation_to_coord_list(anchor, shipLength, orientation), otherFilledCoords))
 
 
 def orientation_to_coord_list(anchor, shipLength, orientation):
-
+    """
+    Generates the list of coordinates.
+    :param anchor: The start coordinate of the ship.
+    :param shipLength: An integer 1-5.
+    :param orientation: An orientation code integer 0-3
+    :return: a list of coordinates representing a ship
+    """
     row, col = anchor
     endRow, endCol = orientation_to_ship_end_coord(anchor, shipLength, orientation)
 
@@ -288,12 +367,14 @@ def orientation_to_coord_list(anchor, shipLength, orientation):
 
 # returns an orientation code 0-3, otherwise returns None if not possible
 def first_possible_orientation(anchor, shipLength, otherFilledCoords):
+    """
+    Returns the first possible orientation code for an anchor point.
+    :param anchor: The start coordinate for the ship.
+    :param shipLength: An integer 1-5.
+    :param otherFilledCoords: A list of other coordinates to disallow
+    :return: an orientation code 0-3
+    """
     for i in [0, 1, 2, 3]:
         if is_possible_orientation(anchor, shipLength, i, otherFilledCoords):
             return i
     return None
-
-
-def coord_to_board_square(board):
-    print(board.squares)
-    return lambda coord: (filter(lambda s: s.grid_coord == coord, board.squares))[0]

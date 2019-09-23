@@ -6,7 +6,6 @@ import sys
 import pygame
 from pygame.locals import *
 from functools import reduce
-from math import floor
 
 pygame.init()
 pygame.display.set_caption("Battleship")
