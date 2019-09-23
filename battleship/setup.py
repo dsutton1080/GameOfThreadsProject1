@@ -20,7 +20,6 @@ class Coordinates:
         :param ship_size: The size of the ship new_coordinate is a part of
         """
         new_coord_tuple = convert_to_tuple(new_coordinate)
-        self.list.append(new_coord_tuple)
         if ship_size == 1:
             self.ship_coordinates[0].append(new_coord_tuple)
         elif ship_size == 2:
@@ -32,16 +31,22 @@ class Coordinates:
         elif ship_size == 5:
             self.ship_coordinates[4].append(new_coord_tuple)
 
-    def verify_not_a_duplicate(self, coordinate):
+    def verify_not_occupied(self, ship):
         """
 
-        :param coordinate: A string representing a coordinate
-        :return: False if a player has already placed a ship at the given coordinate, True otherwise
+        :param ship: A ship object
+        :return: False if ship occupies a space a player is trying to place another ship on, True otherwise
         """
-        if convert_to_tuple(coordinate) not in self.list:
-            return True
-        else:
+        for pos in ship.getPositions():
+            if pos in self.list:
+                return False
+        return True
+
+    def verify_start_not_occupied(self, coordinate):
+        if convert_to_tuple(coordinate) in self.list:
             return False
+        else:
+            return True
 
     def reset_everything(self):
         self.ship_coordinates = [[], [], [], [], []]
@@ -132,7 +137,7 @@ def add_ship(player, size):
         new_coordinate = input("Enter the coordinate where you would like to place your 1 ship: ")
         while not valid_input:
             if verify_ship_input(new_coordinate):
-                if player.verify_not_a_duplicate(new_coordinate):
+                if player.verify_start_not_occupied(new_coordinate):
                     player.add_ship_coordinate(new_coordinate, size)
                     valid_input = True
                 else:
@@ -144,26 +149,29 @@ def add_ship(player, size):
         start_coordinate = input(f"Enter the START coordinate for your {size} ship: ")
         while not valid_input:
             if verify_ship_input(start_coordinate):
-                if player.verify_not_a_duplicate(start_coordinate):
+                if player.verify_start_not_occupied(start_coordinate):
                     player.add_ship_coordinate(start_coordinate, size)
                     valid_input = True
                 else:
-                    start_coordinate = input("Coordinate is occupied. Try again:")
+                    start_coordinate = input("Coordinate is occupied. Try again: ")
             else:
                 start_coordinate = input("Coordinate is invalid. Try again: ")
         valid_input = False
         end_coordinate = input(f"Enter the END coordinate for your {size} ship: ")
         while not valid_input:
             if verify_ship_input(end_coordinate):
-                if player.verify_not_a_duplicate(end_coordinate):
+                ship = G.P.S.createShip(convert_to_tuple(start_coordinate), convert_to_tuple(end_coordinate))
+                if player.verify_not_occupied(ship):
                     if verify_ship_size(start_coordinate, end_coordinate, size):
                         player.add_ship_coordinate(end_coordinate, size)
+                        for pos in ship.getPositions():
+                            player.list.append(pos)
                         valid_input = True
                     else:
                         end_coordinate = input("Either END coordinate is not in the same row or col as START, "
                                                "or ship is the incorrect size. Try again: ")
                 else:
-                    end_coordinate = input("Coordinate is occupied. Try again:")
+                    end_coordinate = input("Coordinate is occupied. Try again: ")
             else:
                 end_coordinate = input("Coordinate is invalid. Try again: ")
 
