@@ -200,9 +200,11 @@ def verify_ship_input(possible_coordinate):
     :return: True if the input is a string in the form of a valid coordinate, False otherwise
     """
     letters = string.ascii_uppercase[:8]
-    if (len(possible_coordinate) == 2) & (possible_coordinate[0].upper() in letters) & (
-            possible_coordinate[1] in [str(x) for x in range(1, 9)]):
-        return True
+    if len(possible_coordinate) == 2:
+        if (possible_coordinate[0].upper() in letters) & (possible_coordinate[1] in [str(x) for x in range(1, 9)]):
+            return True
+        else:
+            return False
     else:
         return False
 
