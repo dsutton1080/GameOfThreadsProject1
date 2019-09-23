@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>setup module &#8212; Battleship 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-setup">
+<span id="setup-module"></span><h1>setup module<a class="headerlink" href="#module-setup" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="setup.Coordinates">
+<em class="property">class </em><code class="sig-prename descclassname">setup.</code><code class="sig-name descname">Coordinates</code><a class="headerlink" href="#setup.Coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="setup.Coordinates.add_ship_coordinate">
+<code class="sig-name descname">add_ship_coordinate</code><span class="sig-paren">(</span><em class="sig-param">new_coordinate</em>, <em class="sig-param">ship_size</em><span class="sig-paren">)</span><a class="headerlink" href="#setup.Coordinates.add_ship_coordinate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a coordinate tuple to the ship_coordinates tuple list
+:param new_coordinate: A string representing a coordinate, ex. “A1”
+:param ship_size: The size of the ship new_coordinate is a part of</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="setup.Coordinates.reset_everything">
+<code class="sig-name descname">reset_everything</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#setup.Coordinates.reset_everything" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="setup.Coordinates.verify_not_occupied">
+<code class="sig-name descname">verify_not_occupied</code><span class="sig-paren">(</span><em class="sig-param">ship</em><span class="sig-paren">)</span><a class="headerlink" href="#setup.Coordinates.verify_not_occupied" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify’s that the coordinate being added is a unique coordinate
+:param ship: A ship object
+:return: False if ship occupies a space a player is trying to place another ship on, True otherwise</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="setup.Coordinates.verify_start_not_occupied">
+<code class="sig-name descname">verify_start_not_occupied</code><span class="sig-paren">(</span><em class="sig-param">coordinate</em><span class="sig-paren">)</span><a class="headerlink" href="#setup.Coordinates.verify_start_not_occupied" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.add_ship">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">add_ship</code><span class="sig-paren">(</span><em class="sig-param">player</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="headerlink" href="#setup.add_ship" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ship coordinate that the player wants and checks that the user entered a valid entry
+:param player: Coordinates object presenting one player’s ship locations
+:param size: The size of the ship being placed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.choose_ships">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">choose_ships</code><span class="sig-paren">(</span><em class="sig-param">player</em>, <em class="sig-param">ship_num</em><span class="sig-paren">)</span><a class="headerlink" href="#setup.choose_ships" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lets the player input their ship coordinates for their ships
+:param player: Coordinates object presenting one player’s ship locations
+:param ship_num: The number of ships a player is to place</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.convert_to_tuple">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">convert_to_tuple</code><span class="sig-paren">(</span><em class="sig-param">string_coord</em><span class="sig-paren">)</span><a class="headerlink" href="#setup.convert_to_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the user input which is a string and returns a tuple
+:param string_coord: A string representing a coordinate,  ex. “A1”
+:return: A 2-tuple representing the same coordinate, ex. (0, 0)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.get_num_of_ships">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">get_num_of_ships</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#setup.get_num_of_ships" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asks the user how many ships they want to play with
+:return: The number of ships in the range 1 to 5 that the user inputs</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.main">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#setup.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main function that runs the game</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.play_again">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">play_again</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#setup.play_again" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lets the user play the game again if they want
+:return: True if they want to play again and False if they don’t want to</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.plays_first">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">plays_first</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#setup.plays_first" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helps the user decide who will be 1st player</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.startup">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">startup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#setup.startup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print’s a welcome message and calls the method plays_first</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.test_input">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">test_input</code><span class="sig-paren">(</span><em class="sig-param">num_ships</em><span class="sig-paren">)</span><a class="headerlink" href="#setup.test_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verification to ensure the user input entered a number between 1 and 5
+:param num_ships: Any input
+:return: True if the input is a number from 1 to 5, False otherwise</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.verify_ship_input">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">verify_ship_input</code><span class="sig-paren">(</span><em class="sig-param">possible_coordinate</em><span class="sig-paren">)</span><a class="headerlink" href="#setup.verify_ship_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks the user input to make sure their coordinate is in the form of A1, A2, … , H7, H8
+:param possible_coordinate: Any input
+:return: True if the input is a string in the form of a valid coordinate, False otherwise</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="setup.verify_ship_size">
+<code class="sig-prename descclassname">setup.</code><code class="sig-name descname">verify_ship_size</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="headerlink" href="#setup.verify_ship_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks to make sure that the size of the ship is legal
+:param start: string representing the coordinate for one end of a ship
+:param end: string representing the coordinate for the other end of the ship
+:param size: The length that the ship is supposed to be
+:return: True if a ship with the given start and end coordinates is the given length, False otherwise</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Battleship</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, DeRon Sutton, Cedric, Chris Hardin, Jace Kline, Rick Petzold.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/setup.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

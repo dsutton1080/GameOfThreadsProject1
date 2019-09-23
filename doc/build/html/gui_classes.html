@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>gui_classes module &#8212; Battleship 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-gui_classes">
+<span id="gui-classes-module"></span><h1>gui_classes module<a class="headerlink" href="#module-gui_classes" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gui_classes.Board">
+<em class="property">class </em><code class="sig-prename descclassname">gui_classes.</code><code class="sig-name descname">Board</code><span class="sig-paren">(</span><em class="sig-param">window_location</em>, <em class="sig-param">width</em>, <em class="sig-param">height</em>, <em class="sig-param">squares=None</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.Board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The logical combination of displayable components to draw a board. Stores dimension data.</p>
+<dl class="method">
+<dt id="gui_classes.Board.create_board_squares">
+<code class="sig-name descname">create_board_squares</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.Board.create_board_squares" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a generic list of grey BoardSquare objects
+:return: A list of BoardSquare objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui_classes.Board.create_col_labels">
+<code class="sig-name descname">create_col_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.Board.create_col_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a list of TextBox objects to be the column labels
+:return: a list of TextBox objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui_classes.Board.create_row_labels">
+<code class="sig-name descname">create_row_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.Board.create_row_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a list of TextBox objects to be the row labels
+:return: a list of TextBox objects</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gui_classes.BoardSquare">
+<em class="property">class </em><code class="sig-prename descclassname">gui_classes.</code><code class="sig-name descname">BoardSquare</code><span class="sig-paren">(</span><em class="sig-param">grid_coord</em>, <em class="sig-param">window_coord</em>, <em class="sig-param">width</em>, <em class="sig-param">height</em>, <em class="sig-param">color=(122</em>, <em class="sig-param">119</em>, <em class="sig-param">111)</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.BoardSquare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<p>Encapsulates the displayable idea of a board square with dimensional and color properties</p>
+<dl class="method">
+<dt id="gui_classes.BoardSquare.update_color">
+<code class="sig-name descname">update_color</code><span class="sig-paren">(</span><em class="sig-param">color</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.BoardSquare.update_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the color of the board square
+:param color: an RGB value
+:return: void</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gui_classes.Player">
+<em class="property">class </em><code class="sig-prename descclassname">gui_classes.</code><code class="sig-name descname">Player</code><span class="sig-paren">(</span><em class="sig-param">ships</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.Player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the encapsulation of ships, guesses, and name of a player</p>
+<dl class="method">
+<dt id="gui_classes.Player.add_guess">
+<code class="sig-name descname">add_guess</code><span class="sig-paren">(</span><em class="sig-param">coord</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.Player.add_guess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a guess coordinate to the player’s guesses
+:param coord: The guess coordinate
+:return: void</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gui_classes.Ship">
+<em class="property">class </em><code class="sig-prename descclassname">gui_classes.</code><code class="sig-name descname">Ship</code><span class="sig-paren">(</span><em class="sig-param">length</em>, <em class="sig-param">squareWidth</em>, <em class="sig-param">squareHeight</em>, <em class="sig-param">window_coord</em>, <em class="sig-param">orientation=0</em>, <em class="sig-param">color=(0</em>, <em class="sig-param">0</em>, <em class="sig-param">255)</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.Ship" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<p>Encapsulates a displayable Ship object for the coord placement procedure.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="gui_classes.State">
+<em class="property">class </em><code class="sig-prename descclassname">gui_classes.</code><code class="sig-name descname">State</code><span class="sig-paren">(</span><em class="sig-param">player1</em>, <em class="sig-param">player2</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Used in the main game loop to switch the current player. It stores the state of both players.</p>
+<dl class="method">
+<dt id="gui_classes.State.is_game_over">
+<code class="sig-name descname">is_game_over</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.State.is_game_over" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cross references the guesses versus the other player’s ships and checks whether the game is over.
+:return: boolean</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gui_classes.State.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">guess</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.State.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the state based by adding the guess and “flipping” the players.
+:param guess: a coordinate
+:return: void</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gui_classes.TextBox">
+<em class="property">class </em><code class="sig-prename descclassname">gui_classes.</code><code class="sig-name descname">TextBox</code><span class="sig-paren">(</span><em class="sig-param">message</em>, <em class="sig-param">window_coord=(0</em>, <em class="sig-param">0)</em>, <em class="sig-param">textcolor=(255</em>, <em class="sig-param">255</em>, <em class="sig-param">255)</em>, <em class="sig-param">backgroundcolor=(0</em>, <em class="sig-param">0</em>, <em class="sig-param">0)</em>, <em class="sig-param">fontsize=48</em>, <em class="sig-param">font=None</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_classes.TextBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<p>An encapsulation of a displayable text box with text</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Battleship</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, DeRon Sutton, Cedric, Chris Hardin, Jace Kline, Rick Petzold.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/gui_classes.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>gui_states module &#8212; Battleship 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-gui_states">
+<span id="gui-states-module"></span><h1>gui_states module<a class="headerlink" href="#module-gui_states" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gui_states.run_choose_board_location">
+<code class="sig-prename descclassname">gui_states.</code><code class="sig-name descname">run_choose_board_location</code><span class="sig-paren">(</span><em class="sig-param">ship</em>, <em class="sig-param">otherShipCoords</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_states.run_choose_board_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a sub-procedure to the procedure ‘run_placed_ships’. Logically, this represents the state for the player to place an already selected ship.
+:param ship: a Ship object that holds the information about its length and other properties
+:param otherShipCoords: a list of all the other previously-placed coordinates. Used prevent invalid placement.
+:return: a list of coordinates corresponding to where the ship was placed or None if the user escapes the transaction</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_states.run_game_loop">
+<code class="sig-prename descclassname">gui_states.</code><code class="sig-name descname">run_game_loop</code><span class="sig-paren">(</span><em class="sig-param">shipCoords1</em>, <em class="sig-param">shipCoords2</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_states.run_game_loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the main game loop for battleship. It consists of a loop the allows one player to guess, stores that guess, updates the current player, and then switches the turn.
+:param shipCoords1: a list of lists of coordinates corresponding to the first player’s chosen ship locations.
+:param shipCoords2: a list of lists of coordinates corresponding to the second player’s chosen ship locations.
+:return: string - the name of the player who won (either “Player 1” or “Player 2”)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_states.run_get_number_ships">
+<code class="sig-prename descclassname">gui_states.</code><code class="sig-name descname">run_get_number_ships</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui_states.run_get_number_ships" title="Permalink to this definition">¶</a></dt>
+<dd><p>This prompts the user to select a number box. It returns an integer value for the number of ships that the game will be played with.
+:return: int from 1-5 representing the number of ships to play with</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_states.run_place_ships">
+<code class="sig-prename descclassname">gui_states.</code><code class="sig-name descname">run_place_ships</code><span class="sig-paren">(</span><em class="sig-param">numShips</em>, <em class="sig-param">playerName</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_states.run_place_ships" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a procedure that allows the user to interactively place their ships on a placement board. It iterates until all ships are placed.
+:param numShips: int - represents the number of placeable ships
+:param playerName: string - used to display the message prompting the user to place their ships
+:return: a list of list of coordinates. Each sub list represents the grouping of a ship.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_states.run_start">
+<code class="sig-prename descclassname">gui_states.</code><code class="sig-name descname">run_start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui_states.run_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>This procedure draws the background battleship image and prompts the player to hit the space bar to play.
+:return: void</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_states.winner_screen_prompt_replay">
+<code class="sig-prename descclassname">gui_states.</code><code class="sig-name descname">winner_screen_prompt_replay</code><span class="sig-paren">(</span><em class="sig-param">winnerName</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_states.winner_screen_prompt_replay" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a display screen procedure that displays the game’s winner and prompts the user to click whether or not to play again.
+:param winnerName: string - the name of the game’s winner
+:return: bool - represents whether or not to play again</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Battleship</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, DeRon Sutton, Cedric, Chris Hardin, Jace Kline, Rick Petzold.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/gui_states.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

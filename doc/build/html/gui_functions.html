@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>gui_functions module &#8212; Battleship 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-gui_functions">
+<span id="gui-functions-module"></span><h1>gui_functions module<a class="headerlink" href="#module-gui_functions" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gui_functions.blit_board">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">blit_board</code><span class="sig-paren">(</span><em class="sig-param">surface</em>, <em class="sig-param">board</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.blit_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a Board object on a pygame Surface object.
+:param surface: a pygame Surface object
+:param board: a Board object
+:return: void</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.blit_objects">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">blit_objects</code><span class="sig-paren">(</span><em class="sig-param">surface</em>, <em class="sig-param">objlist</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.blit_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a list of objects on a pygame Surface object
+:param surface: a pygame Surface object
+:param objlist: a list of objects with surface and rect attributes
+:return: void</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.board_from_coord_code_pairs">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">board_from_coord_code_pairs</code><span class="sig-paren">(</span><em class="sig-param">coordCodePairList</em>, <em class="sig-param">encodingContext</em>, <em class="sig-param">window_location</em>, <em class="sig-param">width</em>, <em class="sig-param">height</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.board_from_coord_code_pairs" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function uses multiple parameters to generate squares that will display the board. It is essentially a wrapper to
+:param coordCodePairList: the list of the coordinate, code pairs that encode the creation of the board squares
+:param encodingContext: The type of board context that indicates the way the board squares are created
+:param window_location: The window coordinates for the future board
+:param width: The board width
+:param height: The board height
+:return: a board with colored squares</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.code_to_color">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">code_to_color</code><span class="sig-paren">(</span><em class="sig-param">context</em>, <em class="sig-param">code</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.code_to_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Based on the context, it will decode the code into an RGB code
+:param context: a string representing the type of board being displayed
+:param code: a single digit integer
+:return: an RGB value for a color</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.cover_instructions">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">cover_instructions</code><span class="sig-paren">(</span><em class="sig-param">surface</em>, <em class="sig-param">textbox</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.cover_instructions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws over a textbox to make it disappear.
+:param surface: The pygame Surface object to draw on.
+:param textbox: The TextBox object to cover.
+:return: void</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.encode_guess_board">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">encode_guess_board</code><span class="sig-paren">(</span><em class="sig-param">guesses</em>, <em class="sig-param">otherShips</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.encode_guess_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pairs a list of guess coordinates with their color-encoding values for displaying a board.
+:param guesses: a list of coordinates
+:param otherShips: a list of lists of coordinates representing the “attacked” ships
+:return: a list of (coordinate, code) pairs</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.encode_guessed_at_board">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">encode_guessed_at_board</code><span class="sig-paren">(</span><em class="sig-param">guesses</em>, <em class="sig-param">ships</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.encode_guessed_at_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pairs a list of guessed-at coordinates with their color-encoding values for displaying a board.
+:param guesses: a list of coordinates
+:param ships: a list of lists of coordinates representing the “attacked” ships
+:return: a list of (coordinate, code) pairs</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.encode_placement_board">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">encode_placement_board</code><span class="sig-paren">(</span><em class="sig-param">suggestionCoords</em>, <em class="sig-param">otherShipCoords</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.encode_placement_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of coordinates with color codes used to update the placement board on each placement iteration.
+:param suggestionCoords: a list of the coordinates being targeted
+:param otherShipCoords: a list of the other coordinates already placed
+:return: a list of (coordinate, code) pairs</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.first_possible_orientation">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">first_possible_orientation</code><span class="sig-paren">(</span><em class="sig-param">anchor</em>, <em class="sig-param">shipLength</em>, <em class="sig-param">otherFilledCoords</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.first_possible_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first possible orientation code for an anchor point.
+:param anchor: The start coordinate for the ship.
+:param shipLength: An integer 1-5.
+:param otherFilledCoords: A list of other coordinates to disallow
+:return: an orientation code 0-3</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.generate_color_squares">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">generate_color_squares</code><span class="sig-paren">(</span><em class="sig-param">coordCodePairList</em>, <em class="sig-param">encodingContext</em>, <em class="sig-param">window_location</em>, <em class="sig-param">width</em>, <em class="sig-param">height</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.generate_color_squares" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function uses multiple parameters to generate squares that will be used to display a board.
+:param coordCodePairList: the list of the coordinate, code pairs that encode the creation of the board squares
+:param encodingContext: The type of board context that indicates the way the board squares are created
+:param window_location: The window coordinates for the future board
+:param width: The board width where the squares will be displayed
+:param height: The board height where the squares will be displayed
+:return: a list of all the squares that will fill a board</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.generate_guess_board">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">generate_guess_board</code><span class="sig-paren">(</span><em class="sig-param">coordCodePairList</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.generate_guess_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses a list of encoded coordinate pairs to generate a displayable board object used when guessing ships.
+:param coordCodePairList: a list of encoded coordinate pairs
+:return: a Board object with colored squares</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.generate_guessed_at_board">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">generate_guessed_at_board</code><span class="sig-paren">(</span><em class="sig-param">coordCodePairList</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.generate_guessed_at_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses a list of encoded coordinate pairs to generate a displayable board object used to show the other team’s attacks
+:param coordCodePairList: a list of encoded coordinate pairs
+:return: a Board object with colored squares</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.generate_placement_board">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">generate_placement_board</code><span class="sig-paren">(</span><em class="sig-param">coordCodePairList</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.generate_placement_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses a list of encoded coordinate pairs to generate a displayable board object used when placing ships.
+:param coordCodePairList: a list of encoded coordinate pairs
+:return: a Board object with colored squares</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.get_hovered_square">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">get_hovered_square</code><span class="sig-paren">(</span><em class="sig-param">pos</em>, <em class="sig-param">board</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.get_hovered_square" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a BoardSquare object that is being hovered on.
+:param pos: The window position coordinates
+:param board: The Board object where the square resides
+:return: A BoardSquare object</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.get_intersect_object_from_list">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">get_intersect_object_from_list</code><span class="sig-paren">(</span><em class="sig-param">pos</em>, <em class="sig-param">ls</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.get_intersect_object_from_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scans a list of objects and returns the list of objects that is targeted by a given position.
+:param pos: a window coordinate
+:param ls: a list of displayable objects
+:return: a displayable object or None</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.highlight">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">highlight</code><span class="sig-paren">(</span><em class="sig-param">surface</em>, <em class="sig-param">obj</em>, <em class="sig-param">color</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.highlight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Colors an object and draws it on a Surface
+:param surface: a pygame Surface object
+:param obj: an object with surface and rect attributes
+:param color: an RGB tuple
+:return: void</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.hit">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">hit</code><span class="sig-paren">(</span><em class="sig-param">guess</em>, <em class="sig-param">ships</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.hit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.is_coord_conflict">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">is_coord_conflict</code><span class="sig-paren">(</span><em class="sig-param">coordList1</em>, <em class="sig-param">coordList2</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.is_coord_conflict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used when placing ships. Returns whether or not there is a coordinate conflict between list of coordinates (ships).
+:param coordList1: A list of coordinates
+:param coordList2: A list of coordinates
+:return: boolean</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.is_on_board">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">is_on_board</code><span class="sig-paren">(</span><em class="sig-param">coord</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.is_on_board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks to see whether a coordinate is a valid coordinate for our playing board
+:param coord: a (row, col) coordinate
+:return: boolean</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.is_possible_orientation">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">is_possible_orientation</code><span class="sig-paren">(</span><em class="sig-param">anchor</em>, <em class="sig-param">shipLength</em>, <em class="sig-param">orientation</em>, <em class="sig-param">otherFilledCoords</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.is_possible_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether a ship orientation is valid to place.
+:param anchor: The start coordinate of the ship.
+:param shipLength: An integer 1-5.
+:param orientation: An orientation code integer 0-3
+:param otherFilledCoords: The list of other coordinates to check against
+:return: boolean</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.next_orientation">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">next_orientation</code><span class="sig-paren">(</span><em class="sig-param">currentOrientation</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.next_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the incremented orientation code (mod 4).
+:param currentOrientation: an integer encoding (1 - 3)
+:return: an integer (1 - 3)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.orientation_to_coord_list">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">orientation_to_coord_list</code><span class="sig-paren">(</span><em class="sig-param">anchor</em>, <em class="sig-param">shipLength</em>, <em class="sig-param">orientation</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.orientation_to_coord_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the list of coordinates.
+:param anchor: The start coordinate of the ship.
+:param shipLength: An integer 1-5.
+:param orientation: An orientation code integer 0-3
+:return: a list of coordinates representing a ship</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.orientation_to_ship_end_coord">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">orientation_to_ship_end_coord</code><span class="sig-paren">(</span><em class="sig-param">anchor</em>, <em class="sig-param">shipLength</em>, <em class="sig-param">orientation</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.orientation_to_ship_end_coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an orientation encoding and the length of a ship, returns a coordinate at the end of the ship
+:param anchor: The starting coordinate of the ship
+:param shipLength: An integer 1-5
+:param orientation: An integer code 0-3
+:return: A coordinate representing the end of the ship</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.ship_length_to_name">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">ship_length_to_name</code><span class="sig-paren">(</span><em class="sig-param">length</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.ship_length_to_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="gui_functions.which_sunk">
+<code class="sig-prename descclassname">gui_functions.</code><code class="sig-name descname">which_sunk</code><span class="sig-paren">(</span><em class="sig-param">guess</em>, <em class="sig-param">guesses</em>, <em class="sig-param">ships</em><span class="sig-paren">)</span><a class="headerlink" href="#gui_functions.which_sunk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of coordinates for a sunken ship given a guess coordinate and past guesses.
+:param guess: coordinate
+:param guesses: a list of previous guesses
+:param ships: a list of list of coordinates that the guesses are “attacking”
+:return: a list of coordinates (a ship) or None</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Battleship</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, DeRon Sutton, Cedric, Chris Hardin, Jace Kline, Rick Petzold.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/gui_functions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

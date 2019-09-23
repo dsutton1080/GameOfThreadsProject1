@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>ship module &#8212; Battleship 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ship">
+<span id="ship-module"></span><h1>ship module<a class="headerlink" href="#module-ship" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ship.Ship">
+<em class="property">class </em><code class="sig-prename descclassname">ship.</code><code class="sig-name descname">Ship</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">coords</em><span class="sig-paren">)</span><a class="headerlink" href="#ship.Ship" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="ship.Ship.getCoordIndex">
+<code class="sig-name descname">getCoordIndex</code><span class="sig-paren">(</span><em class="sig-param">position</em><span class="sig-paren">)</span><a class="headerlink" href="#ship.Ship.getCoordIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function for Hit method
+:param position: A 2-tuple representing a grid position
+:return: The index in coords in which position appears. Returns -1 if not found</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ship.Ship.getPositions">
+<code class="sig-name descname">getPositions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ship.Ship.getPositions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that returns a list that contain grid positions
+:return: A list of grid positions; self.coords except without the boolean values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ship.Ship.hit">
+<code class="sig-name descname">hit</code><span class="sig-paren">(</span><em class="sig-param">position</em><span class="sig-paren">)</span><a class="headerlink" href="#ship.Ship.hit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the boolean value associated with a coordinate to True
+:param position: A 2-tuple representing a grid location
+:return: True if the the hit is a success, false otherwise</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ship.createShip">
+<code class="sig-prename descclassname">ship.</code><code class="sig-name descname">createShip</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em><span class="sig-paren">)</span><a class="headerlink" href="#ship.createShip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ship object when given a start coordinate and end coordinate
+:param start: A 2-tuple given as (row, column)
+:param end: A 2-tuple given as (row, column)
+:return: A Ship object whose ends are located at the given parameters</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Battleship</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, DeRon Sutton, Cedric, Chris Hardin, Jace Kline, Rick Petzold.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/ship.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

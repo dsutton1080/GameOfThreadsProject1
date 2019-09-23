@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>player module &#8212; Battleship 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-player">
+<span id="player-module"></span><h1>player module<a class="headerlink" href="#module-player" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="player.Player">
+<em class="property">class </em><code class="sig-prename descclassname">player.</code><code class="sig-name descname">Player</code><a class="headerlink" href="#player.Player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="player.Player.displayGrids">
+<code class="sig-name descname">displayGrids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.displayGrids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the game boards for the player</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.guess">
+<code class="sig-name descname">guess</code><span class="sig-paren">(</span><em class="sig-param">position</em>, <em class="sig-param">player</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.guess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that determines if the players guess was correct or incorrect
+:param position: A 2-tuple which represents the position the player thinks the enemy ship is located
+:param player: A player object which represents the current player that is guessing
+:return: Returns true if it is a hit and False if it is a miss</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.placeShip">
+<code class="sig-name descname">placeShip</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">end</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.placeShip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that adds a ship and its coordinates to the ship list and game board
+:param start: A 2-tuple representing a start coordinate
+:param end: A 2-tuple representing an end coordinate</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.removeSunkShips">
+<code class="sig-name descname">removeSunkShips</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.removeSunkShips" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes ships that are sunk from the players shipList and is called for a player at the start of their turn</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Battleship</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, DeRon Sutton, Cedric, Chris Hardin, Jace Kline, Rick Petzold.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/player.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
