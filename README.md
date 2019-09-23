@@ -12,3 +12,7 @@
 
 ### Note:
 The **Retrospective Write-up** is in [this directory](./doc).
+
+### How to Run:
+* Navigate to the battleship folder
+* run the command "python3 main.py"
