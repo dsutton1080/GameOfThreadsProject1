@@ -17,6 +17,11 @@ blackBackground = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
 def run_start():
+    """
+    This procedure draws the background battleship image and prompts the player to hit the space bar to play.
+    :return: void
+    """
+
     screen.blit(imageBattleshipSurface, (0, 0))
 
     battleshipTextBox = TextBox("Battleship!", (SCREEN_WIDTH / 3, SCREEN_HEIGHT / 4), fontsize=96)
@@ -38,6 +43,10 @@ def run_start():
 
 # returns the number of ships
 def run_get_number_ships():
+    """
+    This prompts the user to select a number box. It returns an integer value for the number of ships that the game will be played with.
+    :return: int from 1-5 representing the number of ships to play with
+    """
     # define background, instruction, box for each number of ships
     def create_number_boxes():
         def create_number_box(j):
@@ -75,6 +84,12 @@ def run_get_number_ships():
 
 # Returns a list of lists of (row, col) coordinates. Example: [[(1,1), (1,2), (1,3)], [(3,3), (4,3)], [(8,8)]]
 def run_place_ships(numShips, playerName):
+    """
+    This is a procedure that allows the user to interactively place their ships on a placement board. It iterates until all ships are placed.
+    :param numShips: int - represents the number of placeable ships
+    :param playerName: string - used to display the message prompting the user to place their ships
+    :return: a list of list of coordinates. Each sub list represents the grouping of a ship.
+    """
 
     # define the board to place on
     placeBoard = Board(((SCREEN_WIDTH / 3), (SCREEN_HEIGHT / 6)), (SCREEN_WIDTH / 2), (SCREEN_HEIGHT * (2 / 3)))
@@ -168,7 +183,12 @@ def run_place_ships(numShips, playerName):
 
 
 def run_choose_board_location(ship, otherShipCoords):
-
+    """
+    This is a sub-procedure to the procedure 'run_placed_ships'. Logically, this represents the state for the player to place an already selected ship.
+    :param ship: a Ship object that holds the information about its length and other properties
+    :param otherShipCoords: a list of all the other previously-placed coordinates. Used prevent invalid placement.
+    :return: a list of coordinates corresponding to where the ship was placed or None if the user escapes the transaction
+    """
     instructionsTextBoxClick = TextBox("Click an anchor box on the grid. You will then be able to rotate your ship.",
                                        (48, 48))
     instructionsTextBoxEscape = TextBox("Press the ESC button to cancel placing this ship.", (96, 102), fontsize=36)
@@ -208,6 +228,13 @@ def run_choose_board_location(ship, otherShipCoords):
 
 
     def run_rotate_ship(shipLength, anchorCoord, firstOrientation):
+        """
+        This is a sub-procedure to the 'run_choose_board_location' procedure and corresponds to the state where the player rotates their "anchored" ship.
+        :param shipLength: int - the placement ship's length
+        :param anchorCoord: coordinate (row, col) - the pivot coordinate of the ship's rotation
+        :param firstOrientation: int - an orientation code (0-3) representing the initial orientation of the ship
+        :return: a list of coordinates representing the placed coordinates of the ship or None if the user escapes
+        """
         instructionsTextBoxRotate = TextBox("Use the UP (counter-clockwise) and DOWN (clockwise) arrow keys to rotate your ship.", (96, 10), fontsize=36)
         instructionsTextBoxEnter = TextBox("Press SPACE when you are satisfied with the orientation.", (96, 56), fontsize=36)
 
@@ -295,6 +322,12 @@ def run_choose_board_location(ship, otherShipCoords):
 # the main game loop
 # takes 2 args: player1 and player2
 def run_game_loop(shipCoords1, shipCoords2):
+    """
+    This is the main game loop for battleship. It consists of a loop the allows one player to guess, stores that guess, updates the current player, and then switches the turn.
+    :param shipCoords1: a list of lists of coordinates corresponding to the first player's chosen ship locations.
+    :param shipCoords2: a list of lists of coordinates corresponding to the second player's chosen ship locations.
+    :return: string - the name of the player who won (either "Player 1" or "Player 2")
+    """
 
     switchTurnsInstructionsBox = TextBox("Press the SPACE key to switch turns.", (240, 48))
     switchTurnsInstructionsBox2 = TextBox("Please switch spots with your playing partner. Press any key to continue.", (35, SCREEN_HEIGHT / 2), fontsize=44)
@@ -402,6 +435,11 @@ def run_game_loop(shipCoords1, shipCoords2):
 
 # returns a boolean indicating whether or not to play again
 def winner_screen_prompt_replay(winnerName):
+    """
+    This is a display screen procedure that displays the game's winner and prompts the user to click whether or not to play again.
+    :param winnerName: string - the name of the game's winner
+    :return: bool - represents whether or not to play again
+    """
     screen.fill(colors['BLACK'])
     # display the winner text box
     winnerTextBox = TextBox("{} has won the game!".format(winnerName), (130, 48), fontsize=96, textcolor=colors['GREEN'])

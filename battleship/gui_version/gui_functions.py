@@ -21,6 +21,13 @@ def hit(guess, ships):
 
 
 def which_sunk(guess, guesses, ships):
+    """
+    Returns a list of coordinates for a sunken ship given a guess coordinate and past guesses.
+    :param guess: coordinate
+    :param guesses: a list of previous guesses
+    :param ships: a list of list of coordinates that the guesses are "attacking"
+    :return: a list of coordinates (a ship) or None
+    """
     targetShip = flatten(list(filter(lambda s: guess in s, ships)))
     if all(map(lambda c: c in [guess] + guesses, targetShip)):
         return len(targetShip)
@@ -28,6 +35,12 @@ def which_sunk(guess, guesses, ships):
 
 
 def encode_guess_board(guesses, otherShips):
+    """
+    Pairs a list of guess coordinates with their color-encoding values for displaying a board.
+    :param guesses: a list of coordinates
+    :param otherShips: a list of lists of coordinates representing the "attacked" ships
+    :return: a list of (coordinate, code) pairs
+    """
     otherShipCoords = flatten(otherShips)
 
     def map_func(g):
@@ -39,6 +52,12 @@ def encode_guess_board(guesses, otherShips):
 
 
 def encode_guessed_at_board(guesses, ships):
+    """
+    Pairs a list of guessed-at coordinates with their color-encoding values for displaying a board.
+    :param guesses: a list of coordinates
+    :param ships: a list of lists of coordinates representing the "attacked" ships
+    :return: a list of (coordinate, code) pairs
+    """
     shipCoords = flatten(ships)
     allCoords = [(row, col) for row in range(1, 9) for col in range(1, 9)]
 
@@ -57,10 +76,21 @@ def encode_guessed_at_board(guesses, ships):
 
 
 def encode_placement_board(suggestionCoords, otherShipCoords):
+    """
+    Returns a list of coordinates with color codes used to update the placement board on each placement iteration.
+    :param suggestionCoords: a list of the coordinates being targeted
+    :param otherShipCoords: a list of the other coordinates already placed
+    :return: a list of (coordinate, code) pairs
+    """
     return list(map(lambda c: (c, 1), suggestionCoords)) + list(map(lambda c: (c, 2), otherShipCoords))
 
 
 def generate_placement_board(coordCodePairList):
+    """
+    Uses a list of encoded coordinate pairs to generate a displayable board object used when placing ships.
+    :param coordCodePairList: a list of encoded coordinate pairs
+    :return: a Board object with colored squares
+    """
     window_location = ((SCREEN_WIDTH / 3), (SCREEN_HEIGHT / 6))
     width = (SCREEN_WIDTH / 2)
     height = (SCREEN_HEIGHT * (2 / 3))
@@ -68,6 +98,11 @@ def generate_placement_board(coordCodePairList):
 
 
 def generate_guess_board(coordCodePairList):
+    """
+    Uses a list of encoded coordinate pairs to generate a displayable board object used when guessing ships.
+    :param coordCodePairList: a list of encoded coordinate pairs
+    :return: a Board object with colored squares
+    """
     width = (7 / 16) * SCREEN_WIDTH
     height = (1 / 2) * SCREEN_HEIGHT
     window_location = (30, SCREEN_HEIGHT / 4)
@@ -75,6 +110,11 @@ def generate_guess_board(coordCodePairList):
 
 
 def generate_guessed_at_board(coordCodePairList):
+    """
+    Uses a list of encoded coordinate pairs to generate a displayable board object used to show the other team's attacks
+    :param coordCodePairList: a list of encoded coordinate pairs
+    :return: a Board object with colored squares
+    """
     width = (7 / 16) * SCREEN_WIDTH
     height = (1 / 2) * SCREEN_HEIGHT
     window_location = (SCREEN_WIDTH - 30 - width, SCREEN_HEIGHT / 4)
@@ -82,6 +122,15 @@ def generate_guessed_at_board(coordCodePairList):
 
 
 def generate_color_squares(coordCodePairList, encodingContext, window_location, width, height):
+    """
+
+    :param coordCodePairList: 
+    :param encodingContext:
+    :param window_location:
+    :param width:
+    :param height:
+    :return:
+    """
     offset = SCREEN_HEIGHT / 400
     squareWidth = (width / 9) - offset
     squareHeight = (height / 9) - offset
